@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "start": "http-server -c-1"
+  },
+  "devDependencies": {
+    "windsurf": "^0.0.1",
+    "http-server": "^14.1.1"
+  }
+}

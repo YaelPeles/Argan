@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Culinary Argan Oil</title>
+</head>
+<body>
+    <div class="language-selector">
+        <button onclick="changeLanguage('he')" class="lang-btn active">🇮🇱 עברית</button>
+        <button onclick="changeLanguage('en')" class="lang-btn">🇬🇧 English</button>
+        <button onclick="changeLanguage('fr')" class="lang-btn">🇫🇷 Français</button>
+    </div>
+    
+    <header class="main-header">
+        <div class="header-content">
+            <nav>
+                <ul>
+                    <li><a href="#home" data-i18n="home">בית</a></li>
+                    <li><a href="#products" data-i18n="products">מוצרים</a></li>
+                    <li><a href="#about" data-i18n="about">אודות</a></li>
+                    <li><a href="#contact" data-i18n="contact">צור קשר</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title" data-i18n="hero_title">גלה את מהות שמן הארגן הקולינרי</h1>
+            <p class="hero-subtitle" data-i18n="hero_subtitle">טעם טהור, בריאות טבעית</p>
+            <a href="#products" class="cta-button" data-i18n="shop_now">קנה עכשיו</a>
+        </div>
+    </section>
+
+    <section id="products" class="products-section">
+        <div class="section-content">
+            <h2 class="section-title" data-i18n="products_title">המוצרים שלנו</h2>
+            <div class="products-grid">
+                <div class="product-card">
+                    <img src="images/product1.jpg" alt="Culinary Argan Oil">
+                    <h3 data-i18n="product1_title">שמן ארגן קולינרי פרימיום</h3>
+                    <p data-i18n="product1_desc">שמן ארגן טהור 100% טבעי</p>
+                    <button class="buy-button" data-i18n="buy_now">קנה עכשיו</button>
+                </div>
+                <div class="product-card">
+                    <img src="images/product2.jpg" alt="Organic Argan Oil">
+                    <h3 data-i18n="product2_title">שמן ארגן אורגני</h3>
+                    <p data-i18n="product2_desc">מיוצר בתהליך מסורתי</p>
+                    <button class="buy-button" data-i18n="buy_now">קנה עכשיו</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about-section">
+        <div class="section-content">
+            <div class="about-grid">
+                <div class="about-text">
+                    <h2 class="section-title" data-i18n="about_title">אודותינו</h2>
+                    <p class="about-description" data-i18n="about_desc">גלה את הסיפור שלנו והמסורת העתיקה של הפקת שמן ארגן. אנו מחויבים לאיכות הגבוהה ביותר ולשיטות ייצור בנות קיימא.</p>
+                    <a href="#contact" class="learn-more-button" data-i18n="learn_more">למד עוד</a>
+                </div>
+                <div class="about-image">
+                    <img src="images/about-image.jpg" alt="Our Process">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="section-content">
+            <h2 class="section-title" data-i18n="contact_title">צור קשר</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p data-i18n="contact_desc">אנחנו כאן לענות על כל השאלות שלך</p>
+                    <div class="contact-details">
+                        <p>📧 info@culinaryarganoil.com</p>
+                        <p>📞 +972-123-456-789</p>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name" data-i18n="name">שם:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" data-i18n="email">אימייל:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" data-i18n="message">הודעה:</label>
+                        <textarea id="message" name="message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button" data-i18n="send">שלח</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="footer-content">
+            <p data-i18n="footer"> 2024 שמן ארגן קולינרי. כל הזכויות שמורות.</p>
+            <div class="social-links">
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">Facebook</a>
+                <a href="#" class="social-link">Twitter</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="translations.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

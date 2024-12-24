@@ -1,0 +1,53 @@
+const translations = {
+    en: {
+        home: 'Home',
+        products: 'Products',
+        about: 'About',
+        contact: 'Contact',
+        hero_title: 'Discover the Essence of Culinary Argan Oil',
+        products_title: 'Our Products',
+        products_desc: 'Explore our premium Culinary Argan Oil.',
+        about_title: 'About Us',
+        about_desc: 'Learn about the history and benefits of Argan oil.',
+        contact_title: 'Contact Us',
+        name: 'Name:',
+        email: 'Email:',
+        message: 'Message:',
+        send: 'Send',
+        footer: '© 2024 Culinary Argan Oil. All rights reserved.'
+    },
+    he: {
+        home: 'בית',
+        products: 'מוצרים',
+        about: 'אודות',
+        contact: 'צור קשר',
+        hero_title: 'גלה את מהות שמן הארגן הקולינרי',
+        products_title: 'המוצרים שלנו',
+        products_desc: 'גלה את שמן הארגן הקולינרי המשובח שלנו.',
+        about_title: 'עלינו',
+        about_desc: 'למד על ההיסטוריה והיתרונות של שמן ארגן.',
+        contact_title: 'צור קשר',
+        name: 'שם:',
+        email: 'אימייל:',
+        message: 'הודעה:',
+        send: 'שלח',
+        footer: '© 2024 שמן ארגן קולינרי. כל הזכויות שמורות.'
+    },
+    fr: {
+        home: 'Accueil',
+        products: 'Produits',
+        about: 'À propos',
+        contact: 'Contact',
+        hero_title: 'Découvrez l\'Essence de l\'Huile d\'Argan Culinaire',
+        products_title: 'Nos Produits',
+        products_desc: 'Découvrez notre huile d\'argan culinaire premium.',
+        about_title: 'À Propos de Nous',
+        about_desc: 'Découvrez l\'histoire et les bienfaits de l\'huile d\'argan.',
+        contact_title: 'Contactez-nous',
+        name: 'Nom:',
+        email: 'Email:',
+        message: 'Message:',
+        send: 'Envoyer',
+        footer: '© 2024 Huile d\'Argan Culinaire. Tous droits réservés.'
+    }
+};
