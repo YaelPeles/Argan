@@ -61,7 +61,9 @@ const translations = {
             website: 'WWW.ARGANS.CO.IL'
         },
         product2_title: 'Organic Argan Oil',
-        product2_desc: 'Traditionally Produced'
+        product2_desc: 'Traditionally Produced',
+        argan_info: 'About Argan Oil',
+        argan_info_title: 'Culinary Argan Oil - "The Liquid Gold of Morocco"'
     },
     he: {
         nav_brand: 'Saveurs d\'Argan',
@@ -103,7 +105,9 @@ const translations = {
             shelf_life: 'חיי מדף: 24 חודשים'
         },
         product2_title: 'שמן ארגן אורגני למאכל',
-        product2_desc: 'מיוצר בתהליך מסורתי'
+        product2_desc: 'מיוצר בתהליך מסורתי',
+        argan_info: 'על שמן ארגן',
+        argan_info_title: 'שמן הארגן הקולינרי - "הזהב הנוזלי של מרוקו"'
     },
     fr: {
         nav_brand: 'Saveurs d\'Argan',
@@ -167,6 +171,8 @@ const translations = {
             website: 'WWW.ARGANS.CO.IL'
         },
         product2_title: 'Huile d\'Argan Biologique',
-        product2_desc: 'Production Traditionnelle'
+        product2_desc: 'Production Traditionnelle',
+        argan_info: "L'Huile d'Argan",
+        argan_info_title: "L'Huile d'Argan Culinaire - \"L'Or Liquide du Maroc\""
     }
 };

@@ -709,72 +709,77 @@ nav a {
 /* About Section */
 .about-section {
     padding: 80px 0;
-    background-color: var(--background-light);
+    background-color: #fff;
 }
 
 .about-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 2fr;
     gap: 40px;
-    align-items: center;
+    align-items: start;
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-.about-video-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    overflow: hidden;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-}
-
-.about-video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .about-text {
-    text-align: start;
     padding: 20px;
 }
 
-.about-text h2 {
-    color: var(--primary-color);
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-}
-
-.about-description {
-    color: var(--text-color);
-    margin-bottom: 30px;
-    line-height: 1.6;
+.story-text {
     font-size: 1.1rem;
+    line-height: 1.8;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: right;
 }
 
-@media (max-width: 768px) {
+.story-text:last-child {
+    margin-bottom: 0;
+}
+
+.about-image {
+    position: sticky;
+    top: 100px;
+}
+
+.story-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    text-align: center;
+    margin-top: 10px;
+    color: #666;
+    font-style: italic;
+}
+
+@media (max-width: 968px) {
     .about-grid {
         grid-template-columns: 1fr;
     }
 
-    .about-video-container {
-        margin-bottom: 20px;
+    .about-image {
+        position: static;
+        margin-top: 30px;
+        order: -1;
+    }
+
+    .story-text {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        padding: 40px 0;
     }
 
     .about-text {
-        text-align: center;
-        padding: 0 20px;
-    }
-
-    .about-text h2 {
-        font-size: 2rem;
+        padding: 10px;
     }
 }
 
@@ -1108,6 +1113,112 @@ textarea {
 @media (max-width: 768px) {
     .cart-content {
         width: 100%;
+    }
+}
+
+/* Argan Info Section */
+.argan-info-section {
+    padding: 80px 0;
+    background-color: #fcf9f6;
+}
+
+.argan-info-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    align-items: start;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.info-block {
+    margin-bottom: 30px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.info-block h3 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.info-block p {
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.benefits-detailed-list,
+.culinary-uses-list {
+    list-style: none;
+    padding: 0;
+}
+
+.benefits-detailed-list li,
+.culinary-uses-list li {
+    margin-bottom: 10px;
+    padding-right: 25px;
+    position: relative;
+}
+
+.benefits-detailed-list li:before,
+.culinary-uses-list li:before {
+    content: "•";
+    color: var(--primary-color);
+    position: absolute;
+    right: 0;
+    font-size: 1.2em;
+}
+
+.info-image {
+    position: sticky;
+    top: 100px;
+}
+
+.process-image {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.image-caption {
+    text-align: center;
+    margin-top: 10px;
+    color: #666;
+    font-style: italic;
+}
+
+@media (max-width: 968px) {
+    .argan-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .info-image {
+        position: static;
+        margin-top: 30px;
+    }
+
+    .process-image {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .argan-info-section {
+        padding: 40px 0;
+    }
+
+    .info-block {
+        padding: 20px;
+    }
+
+    .info-block h3 {
+        font-size: 1.2rem;
     }
 }
 
