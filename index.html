@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    <title>Culinary Argan Oil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Saveurs d'Argan - שמן ארגן קולינרי</title>
 </head>
 <body>
+    <div class="bsd">בס״ד</div>
     <div class="language-selector">
         <button onclick="changeLanguage('he')" class="lang-btn active">🇮🇱 עברית</button>
         <button onclick="changeLanguage('en')" class="lang-btn">🇬🇧 English</button>
@@ -16,40 +18,120 @@
     
     <header class="main-header">
         <div class="header-content">
+            <div class="brand-logo">
+                <h1>Saveurs d'Argan</h1>
+            </div>
             <nav>
                 <ul>
                     <li><a href="#home" data-i18n="home">בית</a></li>
                     <li><a href="#products" data-i18n="products">מוצרים</a></li>
                     <li><a href="#about" data-i18n="about">אודות</a></li>
                     <li><a href="#contact" data-i18n="contact">צור קשר</a></li>
+                    <li>
+                        <div class="cart-icon">
+                            <span class="material-icons">shopping_cart</span>
+                            <span class="cart-count">0</span>
+                        </div>
+                    </li>
                 </ul>
             </nav>
         </div>
     </header>
 
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3 data-i18n="cart_title">העגלה שלך</h3>
+                <button class="close-cart">&times;</button>
+            </div>
+            <div class="cart-items">
+                <!-- Cart items will be dynamically added here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span data-i18n="total">סה"כ:</span>
+                    <span class="total-amount">₪0</span>
+                </div>
+                <button class="checkout-button" data-i18n="checkout">לתשלום</button>
+            </div>
+        </div>
+    </div>
+
     <section id="home" class="hero-section">
+        <div class="hero-video">
+            <video autoplay muted loop playsinline class="hero-video-element">
+                <source src="videos/demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="hero-overlay"></div>
+        </div>
         <div class="hero-content">
-            <h1 class="hero-title" data-i18n="hero_title">גלה את מהות שמן הארגן הקולינרי</h1>
+            <h1 class="hero-title" data-i18n="hero_title">שמן ארגן קולינרי פרימיום</h1>
             <p class="hero-subtitle" data-i18n="hero_subtitle">טעם טהור, בריאות טבעית</p>
-            <a href="#products" class="cta-button" data-i18n="shop_now">קנה עכשיו</a>
+            <a href="#products" class="cta-button" data-i18n="learn_more">גלה עוד</a>
         </div>
     </section>
 
     <section id="products" class="products-section">
         <div class="section-content">
             <h2 class="section-title" data-i18n="products_title">המוצרים שלנו</h2>
+            <p class="section-description" data-i18n="products_desc">גלה את מתנת הטבע הנדירה</p>
+            
             <div class="products-grid">
                 <div class="product-card">
-                    <img src="images/product1.jpg" alt="Culinary Argan Oil">
-                    <h3 data-i18n="product1_title">שמן ארגן קולינרי פרימיום</h3>
-                    <p data-i18n="product1_desc">שמן ארגן טהור 100% טבעי</p>
-                    <button class="buy-button" data-i18n="buy_now">קנה עכשיו</button>
-                </div>
-                <div class="product-card">
-                    <img src="images/product2.jpg" alt="Organic Argan Oil">
-                    <h3 data-i18n="product2_title">שמן ארגן אורגני</h3>
-                    <p data-i18n="product2_desc">מיוצר בתהליך מסורתי</p>
-                    <button class="buy-button" data-i18n="buy_now">קנה עכשיו</button>
+                    <div class="product-image-container">
+                        <img src="images/products/argan-oil-bottle.jpg" alt="Culinary Argan Oil" class="product-image">
+                        <div class="product-badge">100% טבעי</div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 data-i18n="product1_title">שמן ארגן למאכל</h3>
+                        <p data-i18n="product1_desc">שמן ארגן אורגני טהור 100%</p>
+                        
+                        <div class="benefits-list">
+                            <h4>יתרונות בריאותיים</h4>
+                            <ul>
+                                <li data-i18n="product_details.benefits.0">עשיר בנוגדי חמצון טבעיים</li>
+                                <li data-i18n="product_details.benefits.1">מקור עשיר לויטמין E</li>
+                                <li data-i18n="product_details.benefits.2">תורם לבריאות הלב</li>
+                                <li data-i18n="product_details.benefits.3">מסייע במניעת דלקות</li>
+                                <li data-i18n="product_details.benefits.4">מיוצר בתהליך מסורתי</li>
+                            </ul>
+                        </div>
+
+                        <div class="origin-badge">
+                            <span class="origin-icon">🌳</span>
+                            <span data-i18n="product_details.origin">מקור: מרוקו - אזור האטלס</span>
+                        </div>
+
+                        <div class="size-selector">
+                            <h4>בחר גודל:</h4>
+                            <div class="size-options">
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="100" checked>
+                                    <span class="size-label">100ml</span>
+                                    <span class="size-price">₪99</span>
+                                </label>
+                                <label class="size-option">
+                                    <input type="radio" name="size" value="250">
+                                    <span class="size-label">250ml</span>
+                                    <span class="size-price">₪199</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="product-price">
+                            <span class="price">₪99</span>
+                            <div class="quantity-selector">
+                                <button class="quantity-btn minus">-</button>
+                                <input type="number" value="1" min="1" class="quantity-input">
+                                <button class="quantity-btn plus">+</button>
+                            </div>
+                        </div>
+
+                        <button class="add-to-cart-btn" data-i18n="add_to_cart">הוסף לעגלה</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -58,13 +140,16 @@
     <section id="about" class="about-section">
         <div class="section-content">
             <div class="about-grid">
-                <div class="about-text">
-                    <h2 class="section-title" data-i18n="about_title">אודותינו</h2>
-                    <p class="about-description" data-i18n="about_desc">גלה את הסיפור שלנו והמסורת העתיקה של הפקת שמן ארגן. אנו מחויבים לאיכות הגבוהה ביותר ולשיטות ייצור בנות קיימא.</p>
-                    <a href="#contact" class="learn-more-button" data-i18n="learn_more">למד עוד</a>
+                <div class="about-video-container">
+                    <video autoplay muted loop playsinline class="about-video">
+                        <source src="videos/WhatsApp Video 2024-12-24 at 18.11.54.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
                 </div>
-                <div class="about-image">
-                    <img src="images/about-image.jpg" alt="Our Process">
+                <div class="about-text">
+                    <h2 class="section-title" data-i18n="about_title">אודות</h2>
+                    <p class="about-description" data-i18n="about_desc">גלה את הסיפור שלנו</p>
+                    <a href="#contact" class="cta-button" data-i18n="learn_more">למד עוד</a>
                 </div>
             </div>
         </div>
@@ -77,11 +162,11 @@
                 <div class="contact-info">
                     <p data-i18n="contact_desc">אנחנו כאן לענות על כל השאלות שלך</p>
                     <div class="contact-details">
-                        <p>📧 info@culinaryarganoil.com</p>
+                        <p>📧 argans.office@gmail.com</p>
                         <p>📞 +972-123-456-789</p>
                     </div>
                 </div>
-                <form class="contact-form">
+                <form id="contact-form" class="contact-form">
                     <div class="form-group">
                         <label for="name" data-i18n="name">שם:</label>
                         <input type="text" id="name" name="name" required>
