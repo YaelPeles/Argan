@@ -1,15 +1,36 @@
 // Set Hebrew as the default language
-let currentLanguage = 'he';
+var currentLanguage = 'he';
 
 // Initialize the page with Hebrew language
 document.addEventListener('DOMContentLoaded', () => {
+    if (typeof translations === 'undefined') {
+        console.error('Translations not loaded! Make sure translations.js is loaded before script.js');
+        return;
+    }
+    initializeLanguageButtons();
     changeLanguage('he');
 });
+
+function initializeLanguageButtons() {
+    const buttons = document.querySelectorAll('.lang-btn');
+    buttons.forEach(button => {
+        button.style.pointerEvents = 'auto';
+        button.style.opacity = '1';
+    });
+}
 
 function changeLanguage(lang) {
     currentLanguage = lang;
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    
+    // Update language button states
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.includes(lang === 'he' ? 'עברית' : (lang === 'en' ? 'English' : 'Français'))) {
+            btn.classList.add('active');
+        }
+    });
     
     // Update all translatable elements
     const elements = document.querySelectorAll('[data-i18n]');
@@ -30,6 +51,12 @@ function changeLanguage(lang) {
         if (translations[lang] && translations[lang][key + '_placeholder']) {
             input.placeholder = translations[lang][key + '_placeholder'];
         }
+    });
+
+    // Update text alignment
+    const alignment = lang === 'he' ? 'right' : 'left';
+    document.querySelectorAll('p, h1, h2, h3, h4, h5, h6').forEach(element => {
+        element.style.textAlign = alignment;
     });
 }
 
@@ -78,7 +105,7 @@ document.querySelector('#contact-form').addEventListener('submit', async (e) => 
 });
 
 // Shopping Cart Functionality
-let cart = [];
+var cart = [];
 const cartModal = document.getElementById('cart-modal');
 const cartIcon = document.querySelector('.cart-icon');
 const closeCart = document.querySelector('.close-cart');
