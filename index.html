@@ -29,6 +29,7 @@
                     <li><a href="#home" data-i18n="home">בית</a></li>
                     <li><a href="#products" data-i18n="products">מוצרים</a></li>
                     <li><a href="#argan-info" data-i18n="argan_info">על שמן ארגן</a></li>
+                    <li><a href="#gift" data-i18n="gift">מתנות</a></li>
                     <li><a href="#about" data-i18n="about">אודות</a></li>
                     <li><a href="#contact" data-i18n="contact">צור קשר</a></li>
                     <li>
@@ -122,7 +123,7 @@
                     </div>
                 </div>
                 <div class="info-image">
-                    <img src="images/bottle.jpeg" alt="שמן ארגן איכותי" class="process-image">
+                    <img src="images/products/bottle.jpeg" alt="שמן ארגן איכותי" class="process-image">
                     <div class="image-caption" data-i18n="image_caption">שמן ארגן קולינרי משובח</div>
                 </div>
             </div>
@@ -136,13 +137,16 @@
             <div class="products-grid">
                 <div class="product-card">
                     <div class="product-image-container">
-                        <img src="images/products/argan-oil-bottle.jpg" alt="Culinary Argan Oil" class="product-image">
-                        <div class="product-badge" data-i18n="product_badge">100% טבעי</div>
+                        <div class="product-badges">
+                            <div class="product-badge" data-i18n="product_badge">100% טבעי</div>
+                            <div class="product-badge" data-i18n="kosher_badge">כשר</div>
+                        </div>
+                        <img src="images/products/bottle.jpeg" alt="Culinary Argan Oil" class="product-image">
                     </div>
                     
                     <div class="product-info">
                         <h3 class="product-title" data-i18n="product_title">שמן ארגן קולינרי טהור</h3>
-                        <p class="product-description" data-i18n="product_description">שמן ארגן קולינרי 100% טהור ואורגני בכשרות מהודרת. מיוצר בתהליך מסורתי תוך שמירה על איכות ללא פשרות.</p>
+                        <p class="product-description" data-i18n="product_description">250 מ"ל של שמן ארגן קולינרי 100% טהור ואורגני בכשרות מהודרת. מיוצר בתהליך מסורתי תוך שמירה על איכות ללא פשרות.</p>
                         
                         <div class="benefits-list">
                             <h4 data-i18n="benefits_title">יתרונות בריאותיים</h4>
@@ -163,21 +167,19 @@
                         <div class="size-selector">
                             <h4 data-i18n="size_selector_title">בחר גודל:</h4>
                             <div class="size-options">
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="100" checked>
-                                    <span class="size-label" data-i18n="size_label">100ml</span>
-                                    <span class="size-price">₪99</span>
-                                </label>
-                                <label class="size-option">
-                                    <input type="radio" name="size" value="250">
-                                    <span class="size-label" data-i18n="size_label">250ml</span>
-                                    <span class="size-price">₪199</span>
-                                </label>
+                                <button class="size-btn" data-size="100" data-price="99">
+                                    <span data-i18n="size_label_100">100 מ"ל</span>
+                                    <span class="price">₪99</span>
+                                </button>
+                                <button class="size-btn active" data-size="250" data-price="199">
+                                    <span data-i18n="size_label_250">250 מ"ל</span>
+                                    <span class="price">₪199</span>
+                                </button>
                             </div>
                         </div>
 
                         <div class="product-price">
-                            <span class="price">₪99</span>
+                            <span class="price">₪199</span>
                             <div class="quantity-selector">
                                 <button class="quantity-btn minus">-</button>
                                 <input type="number" value="1" min="1" class="quantity-input">
@@ -192,6 +194,66 @@
         </div>
     </section>
 
+    <section id="gift" class="gift-section">
+        <div class="section-content">
+            <div class="gift-container">
+                <div class="gift-text">
+                    <h2 class="section-title" data-i18n="gift_section_title">מתנה מושלמת לכל אירוע</h2>
+                    <p class="gift-description" data-i18n="gift_description">שמן הארגן שלנו הוא מתנה ייחודית ויוקרתית, המושלמת לכל אירוע. בין אם מדובר בחג, יום הולדת, או סתם כמחווה מיוחדת - זוהי מתנה שתעריך את האהובים עליכם ותעניק להם חוויה קולינרית יוצאת דופן.</p>
+                    <div class="gift-features">
+                        <div class="feature-item">
+                            <span class="material-icons">card_giftcard</span>
+                            <span data-i18n-list="gift_features" data-index="0">אריזת מתנה מהודרת</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-icons">star</span>
+                            <span data-i18n-list="gift_features" data-index="1">מוצר יוקרתי ובריא</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-icons">restaurant</span>
+                            <span data-i18n-list="gift_features" data-index="2">מתאים לחובבי קולינריה</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="material-icons">auto_awesome</span>
+                            <span data-i18n-list="gift_features" data-index="3">מתנה ייחודית ומקורית</span>
+                        </div>
+                    </div>
+                    <a href="#products" class="gift-cta" data-i18n="gift_cta">הזמן כמתנה</a>
+                </div>
+                <div class="gift-image">
+                    <img src="images/products/bottle.jpeg" alt="Argan Oil Gift" class="gift-bottle-image">
+                    <div class="gift-decoration"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="delivery" class="delivery-section">
+        <div class="section-content">
+            <h2 class="section-title" data-i18n="delivery_title">מידע על משלוחים ואיסוף עצמי</h2>
+            <div class="delivery-info">
+                <div class="pickup-locations">
+                    <h3 class="pickup-title" data-i18n="delivery_subtitle">נקודות איסוף עצמי</h3>
+                    <div class="locations-list">
+                        <div class="location-item">
+                            <span class="material-icons">location_on</span>
+                            <span data-i18n-list="pickup_locations" data-index="0">ירושלים - רחוב קרית היובל 4</span>
+                        </div>
+                        <div class="location-item">
+                            <span class="material-icons">location_on</span>
+                            <span data-i18n-list="pickup_locations" data-index="1">הרצליה - רחוב שבט מנשה</span>
+                        </div>
+                    </div>
+                    <p class="pickup-note">
+                        <span class="material-icons">phone</span>
+                        <span data-i18n="delivery_note">יש לתאם טלפונית לפני הגעה</span>
+                    </p>
+                    <p class="coming-soon-note" data-i18n="delivery_coming_soon">* תקנון משלוחים מלא יתווסף בקרוב</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="about" class="about-section">
         <div class="section-content">
             <h2 class="section-title" data-i18n="about_title">הסיפור שלנו</h2>
@@ -199,9 +261,9 @@
                 <div class="about-text">
                     <p class="story-text" data-i18n="story_text">הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן הארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדלים עצי הארגן, נחשפנו לראשונה לטעמו הייחודי והעשיר של שמן הארגן הקולינרי.</p>
                     
-                    <p class="story-text" data-i18n="story_text">מתוך התשוקה הזו נולדה Saveurs d'Argan. החזון שלנו היה פשוט - להביא לישראל את שמן הארגן הקולינרי האיכותי ביותר, המיוצר בתהליך מסורתי ומוקפד.</p>
+                    <p class="story-text" data-i18n="story_text_2">מתוך התשוקה הזו נולדה Saveurs d'Argan. החזון שלנו היה פשוט - להביא לישראל את שמן הארגן הקולינרי האיכותי ביותר, המיוצר בתהליך מסורתי ומוקפד.</p>
                     
-                    <p class="story-text" data-i18n="story_text">כיום, אנחנו גאים להציע שמן ארגן קולינרי פרימיום, המשלב בין המסורת העתיקה של מרוקו לבין הסטנדרטים הגבוהים ביותר של איכות ובטיחות. כל בקבוק מכיל את תמצית האהבה שלנו למוצר הייחודי הזה ואת המחויבות שלנו להביא לשולחנכם את הטוב ביותר.</p>
+                    <p class="story-text" data-i18n="story_text_3">כיום, אנחנו גאים להציע שמן ארגן קולינרי פרימיום, המשלב בין המסורת העתיקה של מרוקו לבין הסטנדרטים הגבוהים ביותר של איכות ובטיחות. כל בקבוק מכיל את תמצית האהבה שלנו למוצר הייחודי הזה ואת המחויבות שלנו להביא לשולחנכם את הטוב ביותר.</p>
                 </div>
                 <div class="about-image">
                     <video autoplay muted loop playsinline class="story-image">

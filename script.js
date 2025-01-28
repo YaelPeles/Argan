@@ -105,16 +105,137 @@ document.querySelector('#contact-form').addEventListener('submit', async (e) => 
 });
 
 // Shopping Cart Functionality
-var cart = [];
-const cartModal = document.getElementById('cart-modal');
-const cartIcon = document.querySelector('.cart-icon');
-const closeCart = document.querySelector('.close-cart');
-const cartCount = document.querySelector('.cart-count');
-const cartItems = document.querySelector('.cart-items');
-const totalAmount = document.querySelector('.total-amount');
-const checkoutButton = document.querySelector('.checkout-button');
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Update cart UI function
+function updateCartDisplay() {
+    const cartItems = document.querySelector('.cart-items');
+    const totalAmount = document.querySelector('.total-amount');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+        const cartItem = document.createElement('div');
+        cartItem.className = 'cart-item';
+        cartItem.innerHTML = `
+            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <div class="cart-item-details">
+                <span class="cart-item-name">${item.name}</span>
+                <span class="cart-item-size">${item.size}</span>
+                <span class="cart-item-price">₪${item.price}</span>
+            </div>
+            <div class="quantity-controls">
+                <button class="quantity-btn minus" onclick="updateQuantity(${index}, -1)">-</button>
+                <span class="quantity-display">${item.quantity}</span>
+                <button class="quantity-btn plus" onclick="updateQuantity(${index}, 1)">+</button>
+            </div>
+        `;
+        cartItems.appendChild(cartItem);
+        total += item.price * item.quantity;
+    });
+
+    totalAmount.textContent = `₪${total.toFixed(2)}`;
+    updateCartCount();
+}
+
+function updateQuantity(index, change) {
+    const item = cart[index];
+    const newQuantity = item.quantity + change;
+    
+    if (newQuantity > 0) {
+        item.quantity = newQuantity;
+    } else {
+        cart.splice(index, 1);
+    }
+    
+    updateCartDisplay();
+    saveCartToLocalStorage();
+}
+
+function addToCart(product) {
+    const existingItemIndex = cart.findIndex(item => 
+        item.id === product.id && item.size === product.size
+    );
+
+    if (existingItemIndex !== -1) {
+        cart[existingItemIndex].quantity += product.quantity;
+    } else {
+        cart.push(product);
+    }
+
+    updateCartDisplay();
+    saveCartToLocalStorage();
+    showCartModal();
+}
+
+function saveCartToLocalStorage() {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function showCartModal() {
+    const cartModal = document.querySelector('.cart-modal');
+    if (cartModal) {
+        cartModal.classList.add('active');
+    }
+}
+
+// Add to Cart functionality
+document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
+    const quantity = parseInt(document.querySelector('.quantity-input').value);
+    const selectedSize = document.querySelector('.size-btn.active').dataset.size;
+    const selectedPrice = parseInt(document.querySelector('.size-btn.active').dataset.price);
+    
+    const product = {
+        id: `argan-oil-${selectedSize}`,
+        name: `שמן ארגן למאכל - ${selectedSize} מ"ל`,
+        price: selectedPrice,
+        quantity: quantity,
+        size: `${selectedSize} מ"ל`,
+        image: 'images/products/bottle.jpeg'
+    };
+
+    addToCart(product);
+
+    // Show success message
+    const successMessage = document.createElement('div');
+    successMessage.className = 'success-message';
+    successMessage.textContent = 'המוצר נוסף לעגלה בהצלחה!';
+    document.body.appendChild(successMessage);
+
+    // Remove success message after 3 seconds
+    setTimeout(() => {
+        successMessage.remove();
+    }, 3000);
+});
+
+// Remove from cart function
+function removeFromCart(productId) {
+    cart = cart.filter(item => item.id !== productId);
+    saveCartToLocalStorage();
+    updateCartDisplay();
+}
+
+// Update cart count function
+function updateCartCount() {
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+    const cartCount = document.querySelector('.cart-count');
+    if (cartCount) {
+        cartCount.textContent = totalItems;
+        cartCount.style.display = totalItems > 0 ? 'block' : 'none';
+    }
+}
+
+// Initialize cart on page load
+document.addEventListener('DOMContentLoaded', () => {
+    updateCartDisplay();
+    updateCartCount();
+});
 
 // Open/Close Cart
+const cartIcon = document.querySelector('.cart-icon');
+const closeCart = document.querySelector('.close-cart');
+const cartModal = document.getElementById('cart-modal');
+
 cartIcon.addEventListener('click', () => {
     cartModal.classList.add('active');
 });
@@ -142,85 +263,34 @@ document.querySelectorAll('.quantity-btn').forEach(button => {
     });
 });
 
-// Size Selection and Price Update
-const sizeOptions = document.querySelectorAll('input[name="size"]');
-const priceDisplay = document.querySelector('.price');
-const prices = {
-    '100': 99,
-    '250': 199
-};
-
-sizeOptions.forEach(option => {
-    option.addEventListener('change', (e) => {
-        const selectedSize = e.target.value;
-        priceDisplay.textContent = `₪${prices[selectedSize]}`;
+// Size selection handling
+document.querySelectorAll('.size-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.size-btn').forEach(btn => btn.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        
+        // Update price display
+        const price = this.dataset.price;
+        const priceDisplay = document.querySelector('.product-price .price');
+        if (priceDisplay) {
+            priceDisplay.textContent = `₪${price}`;
+        }
     });
 });
 
-// Add to Cart
-document.querySelector('.add-to-cart-btn').addEventListener('click', () => {
-    const quantity = parseInt(document.querySelector('.quantity-input').value);
-    const selectedSize = document.querySelector('input[name="size"]:checked').value;
-    const product = {
-        id: `argan-oil-${selectedSize}`,
-        name: `${document.querySelector('[data-i18n="product1_title"]').textContent} - ${selectedSize}ml`,
-        price: prices[selectedSize],
-        quantity: quantity,
-        size: `${selectedSize}ml`,
-        image: document.querySelector('.product-image').src
-    };
-
-    addToCart(product);
-    updateCartUI();
-    cartModal.classList.add('active');
-});
-
-function addToCart(product) {
-    const existingItem = cart.find(item => item.id === product.id);
-    
-    if (existingItem) {
-        existingItem.quantity += product.quantity;
-    } else {
-        cart.push(product);
+// Initialize with 250ml selected
+window.addEventListener('DOMContentLoaded', (event) => {
+    const defaultSizeBtn = document.querySelector('.size-btn[data-size="250"]');
+    if (defaultSizeBtn) {
+        defaultSizeBtn.click();
     }
-    
-    updateCartCount();
-}
-
-function updateCartCount() {
-    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
-    cartCount.textContent = totalItems;
-}
-
-function updateCartUI() {
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    cart.forEach(item => {
-        total += item.price * item.quantity;
-        cartItems.innerHTML += `
-            <div class="cart-item">
-                <img src="${item.image}" alt="${item.name}" class="cart-item-image">
-                <div class="cart-item-details">
-                    <h4>${item.name}</h4>
-                    <p class="cart-item-size">${item.size}</p>
-                    <p class="cart-item-price">₪${item.price} × ${item.quantity}</p>
-                </div>
-                <button class="remove-item" onclick="removeFromCart('${item.id}')">×</button>
-            </div>
-        `;
-    });
-
-    totalAmount.textContent = `₪${total}`;
-}
-
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCartUI();
-    updateCartCount();
-}
+});
 
 // Checkout Process
+const checkoutButton = document.querySelector('.checkout-button');
+
 checkoutButton.addEventListener('click', () => {
     if (cart.length === 0) {
         alert('העגלה ריקה');
