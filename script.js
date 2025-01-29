@@ -60,6 +60,50 @@ function changeLanguage(lang) {
     });
 }
 
+// Contact form handling
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalText = submitButton.textContent;
+    submitButton.disabled = true;
+    submitButton.textContent = '...';
+
+    emailjs.sendForm('service_zmy298j', 'template_l93xvt2', this)
+        .then(function() {
+            // Show success message
+            const successMessage = document.createElement('div');
+            successMessage.className = 'success-message';
+            successMessage.textContent = translations[currentLanguage].message_sent || 'Message sent successfully!';
+            event.target.appendChild(successMessage);
+            
+            // Reset form
+            event.target.reset();
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMessage.remove();
+            }, 5000);
+        })
+        .catch(function(error) {
+            console.error('Error:', error);
+            // Show error message
+            const errorMessage = document.createElement('div');
+            errorMessage.className = 'error-message';
+            errorMessage.textContent = translations[currentLanguage].message_error || 'Failed to send message. Please try again.';
+            event.target.appendChild(errorMessage);
+            
+            // Remove error message after 5 seconds
+            setTimeout(() => {
+                errorMessage.remove();
+            }, 5000);
+        })
+        .finally(function() {
+            submitButton.disabled = false;
+            submitButton.textContent = originalText;
+        });
+});
+
 // Handle form submission
 document.querySelector('#contact-form').addEventListener('submit', async (e) => {
     e.preventDefault();

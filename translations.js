@@ -56,7 +56,7 @@ var translations = {
         size_label_250: "250 מ\"ל",
         size_selector_title: "בחר גודל:",
         about_title: "הסיפור שלנו",
-        story_text: "הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן הארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדלים עצי הארגן, נחשפנו לראשונה לטעמו הייחודי והעשיר של שמן הארגן הקולינרי.",
+        story_text: "הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן ארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדלים עצי הארגן, נחשפנו לראשונה לטעמו הייחודי והעשיר של שמן הארגן הקולינרי.",
         story_text_2: "מתוך התשוקה הזו נולדה Saveurs d'Argan. החזון שלנו היה פשוט - להביא לישראל את שמן הארגן הקולינרי האיכותי ביותר, המיוצר בתהליך מסורתי ומוקפד.",
         story_text_3: "כיום, אנחנו גאים להציע שמן ארגן קולינרי פרימיום, המשלב בין המסורת העתיקה של מרוקו לבין הסטנדרטים הגבוהים ביותר של איכות ובטיחות. כל בקבוק מכיל את תמצית האהבה שלנו למוצר הייחודי הזה ואת המחויבות שלנו להביא לשולחנכם את הטוב ביותר.",
         gift_section_title: "מתנה מושלמת לכל אירוע",
@@ -77,6 +77,8 @@ var translations = {
             "הרצליה - רחוב שבט מנשה"
         ].join('|'),
         delivery_coming_soon: "* תקנון משלוחים מלא יתווסף בקרוב",
+        message_sent: "ההודעה נשלחה בהצלחה!",
+        message_error: "שליחת ההודעה נכשלה. אנא נסה שוב.",
     },
     en: {
         title: "Saveurs d'Argan - Culinary Argan Oil",
@@ -156,6 +158,8 @@ var translations = {
             "Herzliya - Shevet Menashe St."
         ].join('|'),
         delivery_coming_soon: "* Full delivery terms will be added soon",
+        message_sent: "Message sent successfully!",
+        message_error: "Failed to send message. Please try again.",
     },
     fr: {
         title: "Saveurs d'Argan - Huile d'Argan Culinaire",
@@ -235,5 +239,7 @@ var translations = {
             "Herzliya - rue Shevet Menashe"
         ].join('|'),
         delivery_coming_soon: "* Les conditions de livraison complètes seront ajoutées prochainement",
+        message_sent: "Message envoyé avec succès!",
+        message_error: "Échec de l'envoi du message. Veuillez réessayer.",
     }
 };
