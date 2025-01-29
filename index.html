@@ -284,7 +284,7 @@
                     <p data-i18n="contact_desc">אנחנו כאן לענות על כל השאלות שלך</p>
                     <div class="contact-details">
                         <p>📧 argans.office@gmail.com</p>
-                        <p>📞 +972-123-456-789</p>
+                        <p>📞 053-6111959</p>
                     </div>
                 </div>
                 <form id="contact-form" class="contact-form">
@@ -317,6 +317,13 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            // Initialize with just init()
+            emailjs.init();
+        })();
+    </script>
     <script src="translations.js"></script>
     <script src="script.js"></script>
 </body>

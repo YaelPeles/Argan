@@ -88,7 +88,17 @@ document.getElementById('contact-form').addEventListener('submit', function(even
 
     console.log('Sending email with params:', templateParams);
 
-    emailjs.send('service_zmy298j', 'template_l93xvt2', templateParams)
+    const emailParams = {
+        to_name: "Admin",
+        from_name: templateParams.name,
+        from_email: templateParams.email,
+        message: templateParams.message,
+        reply_to: templateParams.email
+    };
+
+    console.log('Sending with params:', emailParams);
+
+    emailjs.send("service_9l7i6wc", "template_l93xvt2", emailParams, "2I1ujWsX3Fe_9X1q4")
         .then(function(response) {
             console.log('SUCCESS!', response.status, response.text);
             const successMessage = document.createElement('div');
