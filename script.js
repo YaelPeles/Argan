@@ -60,48 +60,45 @@ function changeLanguage(lang) {
     });
 }
 
+// Remove the old event listener
+const oldForm = document.getElementById('contact-form');
+if (oldForm) {
+    const newForm = oldForm.cloneNode(true);
+    oldForm.parentNode.replaceChild(newForm, oldForm);
+}
+
 // Contact form handling
 document.getElementById('contact-form').addEventListener('submit', function(event) {
     event.preventDefault();
+
+    // Remove any existing messages
+    const existingMessages = this.querySelectorAll('.success-message, .error-message');
+    existingMessages.forEach(msg => msg.remove());
 
     const submitButton = this.querySelector('button[type="submit"]');
     const originalText = submitButton.textContent;
     submitButton.disabled = true;
     submitButton.textContent = '...';
 
-    // Remove any existing messages
-    const existingMessages = this.querySelectorAll('.success-message, .error-message');
-    existingMessages.forEach(msg => msg.remove());
-
-    // Get form data
-    const formData = {
+    const templateParams = {
         name: this.querySelector('#name').value,
         email: this.querySelector('#email').value,
         message: this.querySelector('#message').value
     };
 
-    console.log('Sending email with data:', formData);
+    console.log('Sending email with params:', templateParams);
 
-    emailjs.send('service_zmy298j', 'template_l93xvt2', formData)
+    emailjs.send('service_zmy298j', 'template_l93xvt2', templateParams)
         .then(function(response) {
             console.log('SUCCESS!', response.status, response.text);
-            // Show success message
             const successMessage = document.createElement('div');
             successMessage.className = 'success-message';
             successMessage.textContent = translations[currentLanguage].message_sent || 'Message sent successfully!';
             event.target.appendChild(successMessage);
-            
-            // Reset form
             event.target.reset();
-            
-            // Remove success message after 5 seconds
-            setTimeout(() => {
-                successMessage.remove();
-            }, 5000);
         })
         .catch(function(error) {
             console.error('FAILED...', error);
-            // Show error message
             const errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
             errorMessage.textContent = translations[currentLanguage].message_error || 'Failed to send message. Please try again.';
@@ -111,55 +108,6 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             submitButton.disabled = false;
             submitButton.textContent = originalText;
         });
-});
-
-// Remove any old event listeners
-const oldForm = document.getElementById('contact-form');
-const newForm = oldForm.cloneNode(true);
-oldForm.parentNode.replaceChild(newForm, oldForm);
-
-// Handle form submission
-document.querySelector('#contact-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const submitButton = form.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.textContent;
-    
-    // Show loading state
-    submitButton.textContent = 'שולח...';
-    submitButton.disabled = true;
-
-    try {
-        const formData = {
-            name: form.querySelector('[name="name"]').value,
-            email: form.querySelector('[name="email"]').value,
-            message: form.querySelector('[name="message"]').value
-        };
-
-        const response = await fetch('http://localhost:3000/send-email', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(formData)
-        });
-
-        if (response.ok) {
-            // Show success message
-            alert('ההודעה נשלחה בהצלחה!');
-            form.reset();
-        } else {
-            throw new Error('Failed to send message');
-        }
-    } catch (error) {
-        console.error('Error:', error);
-        alert('אירעה שגיאה בשליחת ההודעה. אנא נסה שוב מאוחר יותר.');
-    } finally {
-        // Reset button state
-        submitButton.textContent = originalButtonText;
-        submitButton.disabled = false;
-    }
 });
 
 // Shopping Cart Functionality

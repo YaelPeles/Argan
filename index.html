@@ -279,16 +279,26 @@
     <section id="contact" class="contact-section">
         <div class="section-content">
             <h2 class="section-title" data-i18n="contact_title">צור קשר</h2>
-            <div class="contact-container">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <p data-i18n="contact_desc">אנחנו כאן לענות על כל השאלות שלך</p>
+                    <div class="contact-details">
+                        <p>📧 argans.office@gmail.com</p>
+                        <p>📞 +972-123-456-789</p>
+                    </div>
+                </div>
                 <form id="contact-form" class="contact-form">
                     <div class="form-group">
-                        <input type="text" id="name" name="name" required data-i18n-placeholder="name_placeholder">
+                        <label for="name" data-i18n="name">שם:</label>
+                        <input type="text" id="name" name="name" required>
                     </div>
                     <div class="form-group">
-                        <input type="email" id="email" name="email" required data-i18n-placeholder="email_placeholder">
+                        <label for="email" data-i18n="email">אימייל:</label>
+                        <input type="email" id="email" name="email" required>
                     </div>
                     <div class="form-group">
-                        <textarea id="message" name="message" required data-i18n-placeholder="message_placeholder"></textarea>
+                        <label for="message" data-i18n="message">הודעה:</label>
+                        <textarea id="message" name="message" required></textarea>
                     </div>
                     <button type="submit" class="submit-button" data-i18n="send">שלח</button>
                 </form>
