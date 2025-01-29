@@ -69,8 +69,16 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     submitButton.disabled = true;
     submitButton.textContent = '...';
 
-    emailjs.sendForm('service_zmy298j', 'template_l93xvt2', this)
-        .then(function() {
+    // Get form data
+    const formData = {
+        from_name: this.querySelector('#from_name').value,
+        from_email: this.querySelector('#from_email').value,
+        message: this.querySelector('#message').value
+    };
+
+    emailjs.send('service_zmy298j', 'template_l93xvt2', formData)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
             // Show success message
             const successMessage = document.createElement('div');
             successMessage.className = 'success-message';
@@ -86,7 +94,7 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             }, 5000);
         })
         .catch(function(error) {
-            console.error('Error:', error);
+            console.error('FAILED...', error);
             // Show error message
             const errorMessage = document.createElement('div');
             errorMessage.className = 'error-message';
