@@ -69,12 +69,18 @@ document.getElementById('contact-form').addEventListener('submit', function(even
     submitButton.disabled = true;
     submitButton.textContent = '...';
 
+    // Remove any existing messages
+    const existingMessages = this.querySelectorAll('.success-message, .error-message');
+    existingMessages.forEach(msg => msg.remove());
+
     // Get form data
     const formData = {
-        from_name: this.querySelector('#from_name').value,
-        from_email: this.querySelector('#from_email').value,
+        name: this.querySelector('#name').value,
+        email: this.querySelector('#email').value,
         message: this.querySelector('#message').value
     };
+
+    console.log('Sending email with data:', formData);
 
     emailjs.send('service_zmy298j', 'template_l93xvt2', formData)
         .then(function(response) {
@@ -100,17 +106,17 @@ document.getElementById('contact-form').addEventListener('submit', function(even
             errorMessage.className = 'error-message';
             errorMessage.textContent = translations[currentLanguage].message_error || 'Failed to send message. Please try again.';
             event.target.appendChild(errorMessage);
-            
-            // Remove error message after 5 seconds
-            setTimeout(() => {
-                errorMessage.remove();
-            }, 5000);
         })
         .finally(function() {
             submitButton.disabled = false;
             submitButton.textContent = originalText;
         });
 });
+
+// Remove any old event listeners
+const oldForm = document.getElementById('contact-form');
+const newForm = oldForm.cloneNode(true);
+oldForm.parentNode.replaceChild(newForm, oldForm);
 
 // Handle form submission
 document.querySelector('#contact-form').addEventListener('submit', async (e) => {
