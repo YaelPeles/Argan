@@ -46,9 +46,9 @@ var translations = {
         benefits_description: "גלה את היתרונות הבריאותיים המדהימים של שמן הארגן הקולינרי שלנו",
         source_title: "מקור",
         source_description: "מרוקו - אזור האטלס",
-        image_caption: "שמן ארגן קולינרי משובח",
+        image_caption: "עץ הארגן",
         natural: "100% טבעי",
-        kosher_badge: "כשר",
+        kosher_badge: "כשר בהשגחת הבד״ץ",
         product_badge: "100% טבעי",
         product_title: "שמן ארגן קולינרי טהור",
         product_description: "שמן ארגן קולינרי 100% טהור ואורגני בכשרות מהודרת. מיוצר בתהליך מסורתי תוך שמירה על איכות ללא פשרות.",
@@ -73,8 +73,10 @@ var translations = {
         delivery_subtitle: "נקודות איסוף עצמי",
         delivery_note: "יש לתאם טלפונית לפני הגעה",
         pickup_locations: [
-            "ירושלים - רחוב קרית היובל 4",
-            "הרצליה - רחוב שבט מנשה"
+            "ירושלים",
+            "הרצליה",
+            "פתח תקווה",
+            "תל אביב"
         ].join('|'),
         delivery_coming_soon: "* תקנון משלוחים מלא יתווסף בקרוב",
         message_sent: "ההודעה נשלחה בהצלחה!",
@@ -127,9 +129,9 @@ var translations = {
         benefits_description: "Discover the amazing health benefits of our culinary Argan oil",
         source_title: "Source",
         source_description: "Morocco - Atlas Region",
-        image_caption: "Premium Culinary Argan Oil",
+        image_caption: "The Argan Tree",
         natural: "100% Natural",
-        kosher_badge: "Kosher",
+        kosher_badge: "Kosher - Badatz Certification",
         product_badge: "100% Natural",
         product_title: "Pure Culinary Argan Oil",
         product_description: "100% pure and organic culinary argan oil with strict kosher certification. Produced traditionally while maintaining uncompromising quality.",
@@ -154,8 +156,10 @@ var translations = {
         delivery_subtitle: "Self-Pickup Locations",
         delivery_note: "Please call ahead before arrival",
         pickup_locations: [
-            "Jerusalem - 4 Kiryat HaYovel St.",
-            "Herzliya - Shevet Menashe St."
+            "Jerusalem",
+            "Herzliya",
+            "Petah Tikva",
+            "Tel Aviv"
         ].join('|'),
         delivery_coming_soon: "* Full delivery terms will be added soon",
         message_sent: "Message sent successfully!",
@@ -208,7 +212,7 @@ var translations = {
         benefits_description: "Découvrez les incroyables bienfaits pour la santé de notre huile d'Argan culinaire",
         source_title: "Origine",
         source_description: "Maroc - Région de l'Atlas",
-        image_caption: "Huile d'Argan Culinaire Premium",
+        image_caption: "L'arbre d'Argan",
         natural: "100% Naturel",
         kosher_badge: "Casher",
         product_badge: "100% Naturel",
@@ -235,8 +239,10 @@ var translations = {
         delivery_subtitle: "Points de Retrait",
         delivery_note: "Veuillez appeler avant votre arrivée",
         pickup_locations: [
-            "Jérusalem - 4 rue Kiryat HaYovel",
-            "Herzliya - rue Shevet Menashe"
+            "Jérusalem",
+            "Herzliya",
+            "Petah Tikva",
+            "Tel Aviv"
         ].join('|'),
         delivery_coming_soon: "* Les conditions de livraison complètes seront ajoutées prochainement",
         message_sent: "Message envoyé avec succès!",
