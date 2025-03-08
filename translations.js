@@ -59,16 +59,7 @@ var translations = {
         story_text: "הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן ארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדלים עצי הארגן, נחשפנו לראשונה לטעמו הייחודי והעשיר של שמן הארגן למאכל.",
         story_text_2: "מתוך התשוקה הזו נולדה Saveurs d'Argan. החזון שלנו היה פשוט - להביא לישראל את שמן הארגן למאכל האיכותי ביותר, המיוצר בתהליך מסורתי ומוקפד.",
         story_text_3: "כיום, אנחנו גאים להציע שמן ארגן למאכל פרימיום, המשלב בין המסורת העתיקה של מרוקו לבין הסטנדרטים הגבוהים ביותר של איכות ובטיחות. כל בקבוק מכיל את תמצית האהבה שלנו למוצר הייחודי הזה ואת המחויבות שלנו להביא לשולחנכם את הטוב ביותר.",
-        gift_section_title: "שמן יוקרתי לאדם יקר",
-        gift_description: "שמן הארגן שלנו הוא מתנה ייחודית ויוקרתית, המושלמת לכל אירוע. בין אם מדובר בחג, יום הולדת, או סתם כמחווה מיוחדת - זוהי מתנה שתעריך את האהובים עליכם ותעניק להם חוויה קולינרית יוצאת דופן.",
-        gift_features: [
-            "אריזת מתנה מהודרת",
-            "מוצר יוקרתי ובריא",
-            "מתאים לחובבי קולינריה",
-            "מתנה ייחודית ומקורית"
-        ].join('|'),
-        gift_cta: "הזמן כמתנה",
-        gift: "מתנות",
+
         delivery_title: "מידע על משלוחים ואיסוף עצמי",
         delivery_subtitle: "נקודות איסוף עצמי",
         delivery_note: "יש לתאם טלפונית לפני הגעה",
@@ -142,16 +133,7 @@ var translations = {
         story_text: "Our story begins with a magical journey to Morocco, where we fell in love not only with the breathtaking landscapes and rich culture but also with a rare culinary treasure - Argan oil. During our visit to southwestern Morocco, the only place in the world where Argan trees grow, we were first exposed to the unique and rich taste of edible Argan oil.",
         story_text_2: "From this passion, Saveurs d'Argan was born. Our vision was simple - to bring to Israel the highest quality edible argan oil, produced through a traditional and meticulous process.",
         story_text_3: "Today, we are proud to offer premium edible argan oil that combines Morocco's ancient tradition with the highest standards of quality and safety. Each bottle contains our love for this unique product and our commitment to bringing you the very best.",
-        gift_section_title: "The Perfect Gift for Any Occasion",
-        gift_description: "Our Argan oil makes a unique and luxurious gift, perfect for any occasion. Whether it's a holiday, birthday, or just a special gesture - it's a gift that will show your appreciation and provide your loved ones with an exceptional culinary experience.",
-        gift_features: [
-            "Elegant gift packaging",
-            "Premium and healthy product",
-            "Perfect for culinary enthusiasts",
-            "Unique and original gift"
-        ].join('|'),
-        gift_cta: "Order as a Gift",
-        gift: "Gifts",
+
         delivery_title: "Delivery & Pickup Information",
         delivery_subtitle: "Self-Pickup Locations",
         delivery_note: "Please call ahead before arrival",
@@ -225,16 +207,9 @@ var translations = {
         story_text: "Notre histoire commence par un voyage magique au Maroc, où nous sommes tombés amoureux non seulement des paysages à couper le souffle et de la riche culture, mais aussi d'un trésor culinaire rare - l'huile d'Argan. Lors de notre visite dans le sud-ouest du Maroc, le seul endroit au monde où poussent les arganiers, nous avons découvert pour la première fois le goût unique et riche de l'huile d'Argan alimentaire.",
         story_text_2: "C'est de cette passion qu'est née Saveurs d'Argan. Notre vision était simple - apporter en Israël l'huile d'argan alimentaire de la plus haute qualité, produite selon un processus traditionnel et méticuleux.",
         story_text_3: "Aujourd'hui, nous sommes fiers de proposer une huile d'argan alimentaire premium qui allie la tradition ancestrale du Maroc aux plus hauts standards de qualité et de sécurité. Chaque bouteille contient notre amour pour ce produit unique et notre engagement à vous apporter le meilleur.",
-        gift_section_title: "Le Cadeau Parfait pour Toute Occasion",
-        gift_description: "Notre huile d'Argan est un cadeau unique et luxueux, parfait pour toute occasion. Que ce soit pour une fête, un anniversaire ou simplement un geste spécial - c'est un cadeau qui montrera votre appréciation et offrira à vos proches une expérience culinaire exceptionnelle.",
-        gift_features: [
-            "Emballage cadeau élégant",
-            "Produit premium et sain",
-            "Parfait pour les amateurs de cuisine",
-            "Cadeau unique et original"
-        ].join('|'),
-        gift_cta: "Commander comme Cadeau",
-        gift: "Cadeaux",
+
+
+
         delivery_title: "Informations de Livraison et Points de Retrait",
         delivery_subtitle: "Points de Retrait",
         delivery_note: "Veuillez appeler avant votre arrivée",
