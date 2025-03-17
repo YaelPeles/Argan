@@ -9,44 +9,89 @@ const PRODUCT_PRICES = {
 // Initialize payment options in the cart modal
 function initializePayments() {
     try {
-        // Hide any existing error messages
-        const existingErrors = document.querySelectorAll('.payment-error');
-        existingErrors.forEach(error => error.remove());
-
         // Get cart items and validate
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        console.log('Cart contents:', cart);
         
         if (!cart || !Array.isArray(cart) || cart.length === 0) {
-            console.log('Cart is empty');
             return;
         }
 
         const cartTotal = calculateCartTotal();
-        console.log('Cart total:', cartTotal);
         
         if (!cartTotal || cartTotal <= 0) {
-            console.log('Invalid cart total');
             return;
         }
 
-        // Show payment form and update order summary
+        // Show payment form and PayPal container
         const paymentForm = document.querySelector('.payment-form');
         const checkoutButton = document.querySelector('.checkout-button');
+        const paypalContainer = document.getElementById('paypal-button-container');
+        const cartItems = document.querySelector('.cart-items');
         
+        if (!paypalContainer) {
+            return;
+        }
+
+        // Hide cart edit buttons but show order summary
+        if (cartItems) {
+            const editButtons = cartItems.querySelectorAll('.quantity-controls, .remove-item');
+            editButtons.forEach(button => button.style.display = 'none');
+        }
+
+        // Update order summary with items and total
+        updateOrderSummary(cart, cartTotal);
+
         if (paymentForm && checkoutButton) {
             checkoutButton.style.display = 'none';
             paymentForm.style.display = 'block';
-            
-            // Update order summary
-            updateOrderSummary(cart, cartTotal);
-            
-            // Initialize PayPal buttons
-            initializePayPalButton(cartTotal);
+            paypalContainer.style.display = 'block';
         }
+
+        // Clear any existing buttons
+        paypalContainer.innerHTML = '';
+
+        // Initialize PayPal buttons
+        paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'gold',
+                shape: 'rect',
+                height: 45
+            },
+            createOrder: function(data, actions) {
+                const currentTotal = calculateCartTotal();
+                if (currentTotal <= 0) return null;
+
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'ILS',
+                            value: currentTotal.toString()
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    const orderDetails = {
+                        orderNumber: generateOrderNumber(),
+                        orderDate: new Date().toISOString(),
+                        paymentMethod: details.payment_source?.card ? 'Credit Card' : 'PayPal',
+                        customerInfo: {
+                            name: details.payer.name.given_name + ' ' + details.payer.name.surname,
+                            email: details.payer.email_address
+                        },
+                        items: JSON.parse(localStorage.getItem('cart')) || [],
+                        total: calculateCartTotal()
+                    };
+                    showOrderConfirmation(orderDetails);
+                    localStorage.removeItem('cart');
+                });
+            }
+        }).render('#paypal-button-container');
+
     } catch (error) {
         console.error('Error initializing payments:', error);
-        showPaymentError(translations[currentLanguage].payment_error);
     }
 }
 
@@ -75,21 +120,9 @@ function calculateCartTotal() {
     }
 }
 
-// Show payment error message
+// Placeholder for error handling if needed in the future
 function showPaymentError(message) {
-    const errorElement = document.createElement('div');
-    errorElement.className = 'payment-error';
-    errorElement.textContent = message;
-
-    const cartFooter = document.querySelector('.cart-footer');
-    if (cartFooter) {
-        // Remove existing error messages
-        const existingErrors = cartFooter.querySelectorAll('.payment-error');
-        existingErrors.forEach(error => error.remove());
-        
-        cartFooter.appendChild(errorElement);
-        setTimeout(() => errorElement.remove(), 3000);
-    }
+    console.error('Payment error:', message);
 }
 
 // Update order summary in payment form
