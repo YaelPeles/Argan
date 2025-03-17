@@ -363,11 +363,8 @@
     <script src="translations.js"></script>
     
     <!-- Load PayPal SDK before payment.js -->
-    <script src="paypal-config-local.js"></script>
     <script>
-        // For production, this will be replaced during deployment
-        
-        // Dynamically create PayPal script
+        const paypalClientId = 'AdNnm8L-kyOWzawRyF55lg0ZCwJJzMR715IZ7ymcocNqQsIXZB2SzXzEorkeN0yA2JiEyftA5_IT0R3u';
         const paypalScript = document.createElement('script');
         paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
         document.head.appendChild(paypalScript);
