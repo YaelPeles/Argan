@@ -297,7 +297,7 @@ function updateCartCount() {
     }
 }
 
-// Initialize cart and payment system on page load
+// Initialize cart system on page load
 document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay();
     updateCartCount();
@@ -316,30 +316,22 @@ document.addEventListener('DOMContentLoaded', () => {
         checkoutButton.addEventListener('click', (e) => {
             e.preventDefault();
             const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            console.log('Checkout clicked, cart:', cart); // Debug log
-
+            
             // Validate cart
             if (!cart || !Array.isArray(cart) || cart.length === 0) {
-                console.log('Cart validation failed'); // Debug log
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'payment-error';
-                errorMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
-                const cartFooter = document.querySelector('.cart-footer');
-                if (cartFooter) {
-                    // Remove any existing error messages
-                    const existingErrors = cartFooter.querySelectorAll('.payment-error');
-                    existingErrors.forEach(error => error.remove());
-                    cartFooter.appendChild(errorMessage);
-                    setTimeout(() => errorMessage.remove(), 3000);
-                }
+                console.log('Cart is empty');
                 return;
             }
 
-            // Show payment options if cart is valid
-            showPaymentOptions();
-            // Initialize payments
-            if (typeof initializePayments === 'function') {
-                initializePayments();
+            // Hide checkout button and show PayPal container
+            checkoutButton.style.display = 'none';
+            const paypalContainer = document.getElementById('paypal-button-container');
+            if (paypalContainer) {
+                paypalContainer.style.display = 'block';
+                // Initialize PayPal buttons
+                if (typeof initializePayments === 'function') {
+                    initializePayments();
+                }
             }
         });
     }
@@ -369,40 +361,16 @@ function hideCartModal() {
 
 // Payment Functions
 function showPaymentOptions() {
-    console.log('Showing payment options...');
     const checkoutButton = document.querySelector('.checkout-button');
-    const paymentMethods = document.querySelector('.payment-methods');
-    const paymentOptions = document.querySelector('.payment-options');
+    const paypalContainer = document.getElementById('paypal-button-container');
     
-    if (checkoutButton && paymentMethods) {
-        // Hide checkout button and show payment methods
+    if (checkoutButton && paypalContainer) {
         checkoutButton.style.display = 'none';
-        paymentMethods.style.display = 'block';
+        paypalContainer.style.display = 'block';
         
-        // Show PayPal container directly
-        const paypalContainer = document.querySelector('#paypal-button-container');
-        if (paypalContainer) {
-            paypalContainer.style.display = 'block';
-            // Initialize PayPal
-            if (typeof initializePayments === 'function') {
-                initializePayments();
-            } else {
-                console.error('initializePayments function not found');
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'payment-error';
-                errorMessage.textContent = translations[currentLanguage].payment_error || 'שגיאה בטעינת אמצעי התשלום';
-                const cartFooter = document.querySelector('.cart-footer');
-                if (cartFooter) {
-                    cartFooter.appendChild(errorMessage);
-                    setTimeout(() => errorMessage.remove(), 3000);
-                }
-            }
+        if (typeof initializePayments === 'function') {
+            initializePayments();
         }
-    } else {
-        console.error('Required elements not found:', {
-            checkoutButton: !!checkoutButton,
-            paymentMethods: !!paymentMethods
-        });
     }
 }
 
@@ -457,27 +425,8 @@ document.querySelectorAll('.size-btn').forEach(button => {
 
 // Initialize with 250ml selected
 window.addEventListener('DOMContentLoaded', (event) => {
+    // Initialize default size selection
     const defaultSizeBtn = document.querySelector('.size-btn[data-size="250"]');
-
-    // Add checkout button event listener
-    const checkoutButton = document.querySelector('.checkout-button');
-    if (checkoutButton) {
-        checkoutButton.addEventListener('click', function() {
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            if (cart.length === 0) {
-                const errorMessage = document.createElement('div');
-                errorMessage.className = 'payment-error';
-                errorMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
-                document.querySelector('.cart-footer').appendChild(errorMessage);
-                
-                setTimeout(() => {
-                    errorMessage.remove();
-                }, 3000);
-                return;
-            }
-            showPaymentOptions();
-        });
-    }
     if (defaultSizeBtn) {
         defaultSizeBtn.click();
     }
