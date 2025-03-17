@@ -10,11 +10,15 @@ const PRODUCT_PRICES = {
 function initializePayments() {
     try {
         // Get cart items and validate
+        console.log('1. Getting cart items...');
         const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        console.log('Cart contents:', cart);
         
         if (!cart || !Array.isArray(cart) || cart.length === 0) {
+            console.log('Error: Cart is empty or invalid');
             return;
         }
+        console.log('Cart validation passed');
 
         const cartTotal = calculateCartTotal();
         
@@ -22,13 +26,21 @@ function initializePayments() {
             return;
         }
 
-        // Show payment form and PayPal container
+        console.log('3. Setting up payment UI...');
         const paymentForm = document.querySelector('.payment-form');
         const checkoutButton = document.querySelector('.checkout-button');
         const paypalContainer = document.getElementById('paypal-button-container');
         const cartItems = document.querySelector('.cart-items');
         
+        console.log('UI Elements found:', {
+            paymentForm: !!paymentForm,
+            checkoutButton: !!checkoutButton,
+            paypalContainer: !!paypalContainer,
+            cartItems: !!cartItems
+        });
+        
         if (!paypalContainer) {
+            console.log('Error: PayPal container not found');
             return;
         }
 
@@ -50,8 +62,17 @@ function initializePayments() {
         // Clear any existing buttons
         paypalContainer.innerHTML = '';
 
-        // Initialize PayPal buttons
-        paypal.Buttons({
+        console.log('4. Initializing PayPal buttons...');
+        if (typeof paypal === 'undefined') {
+            console.log('Error: PayPal SDK not loaded');
+            return;
+        }
+        console.log('PayPal SDK found, creating buttons...');
+        
+        console.log('4. Initializing PayPal buttons...');
+        const paypalButtonConfig = {
+            // PayPal button configuration
+            fundingSource: paypal.FUNDING.PAYPAL,
             style: {
                 layout: 'vertical',
                 color: 'gold',
@@ -59,9 +80,15 @@ function initializePayments() {
                 height: 45
             },
             createOrder: function(data, actions) {
+                console.log('5. Creating PayPal order...');
                 const currentTotal = calculateCartTotal();
-                if (currentTotal <= 0) return null;
+                console.log('Current total:', currentTotal);
+                if (currentTotal <= 0) {
+                    console.log('Error: Invalid total amount');
+                    return null;
+                }
 
+                console.log('Creating order with amount:', currentTotal);
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
@@ -88,11 +115,28 @@ function initializePayments() {
                     localStorage.removeItem('cart');
                 });
             }
-        }).render('#paypal-button-container');
+        };
+
+        // Create PayPal button
+        const button = paypal.Buttons(paypalButtonConfig);
+        
+        // Check if button can be rendered
+        if (!button.isEligible()) {
+            console.log('PayPal button is not eligible');
+            return;
+        }
+        
+        // Render the button
+        console.log('Rendering PayPal button...');
+        button.render('#paypal-button-container').catch(function(error) {
+            console.error('Failed to render PayPal button:', error);
+        });
 
     } catch (error) {
         console.error('Error initializing payments:', error);
+        console.error('Error stack:', error.stack);
     }
+    console.log('=== Payment Initialization Complete ===');
 }
 
 // Calculate cart total
@@ -330,8 +374,24 @@ function showPaymentSuccess(message) {
 
 
 
-// Initialize payment handling when document loads
+// Wait for both DOM and PayPal SDK to load
+let paypalSDKLoaded = false;
+let domLoaded = false;
+
+window.paypalSDKLoaded = function() {
+    console.log('PayPal SDK load callback triggered');
+    paypalSDKLoaded = true;
+    if (domLoaded) {
+        initializePayments();
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Content loaded');
+    domLoaded = true;
+    if (paypalSDKLoaded) {
+        initializePayments();
+    }
     const checkoutButton = document.querySelector('.checkout-button');
     if (checkoutButton) {
         checkoutButton.addEventListener('click', () => {
