@@ -365,7 +365,7 @@
     <script>
         const paypalClientId = '%%PAYPAL_CLIENT_ID%%';
         const paypalScript = document.createElement('script');
-        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
+        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL&enable-funding=card,credit`;
         document.head.appendChild(paypalScript);
     </script>
     
