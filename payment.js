@@ -19,7 +19,6 @@ function initializePayments() {
         
         if (!cart || !Array.isArray(cart) || cart.length === 0) {
             console.log('Cart is empty');
-            showPaymentError(translations[currentLanguage].cart_empty);
             return;
         }
 
@@ -28,7 +27,6 @@ function initializePayments() {
         
         if (!cartTotal || cartTotal <= 0) {
             console.log('Invalid cart total');
-            showPaymentError(translations[currentLanguage].cart_empty);
             return;
         }
 
