@@ -117,18 +117,59 @@ function initializePayments() {
             }
         };
 
-        // Create PayPal button
-        const button = paypal.Buttons(paypalButtonConfig);
-        
+        // Create and store PayPal button instance
+        paypalButtonInstance = paypal.Buttons({
+            style: {
+                layout: 'vertical',
+                color: 'gold',
+                shape: 'rect',
+                height: 45
+            },
+            createOrder: function(data, actions) {
+                const currentTotal = calculateCartTotal();
+                console.log('Creating order with total:', currentTotal);
+                
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            currency_code: 'ILS',
+                            value: currentTotal.toString()
+                        }
+                    }]
+                });
+            },
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                    console.log('Payment completed successfully:', details);
+                    const orderDetails = {
+                        orderNumber: generateOrderNumber(),
+                        orderDate: new Date().toISOString(),
+                        paymentMethod: details.payment_source?.card ? 'Credit Card' : 'PayPal',
+                        customerInfo: {
+                            name: details.payer.name.given_name + ' ' + details.payer.name.surname,
+                            email: details.payer.email_address
+                        },
+                        items: JSON.parse(localStorage.getItem('cart')) || [],
+                        total: calculateCartTotal()
+                    };
+                    showOrderConfirmation(orderDetails);
+                    localStorage.removeItem('cart');
+                });
+            },
+            onError: function(err) {
+                console.error('PayPal error:', err);
+            }
+        });
+
         // Check if button can be rendered
-        if (!button.isEligible()) {
+        if (!paypalButtonInstance.isEligible()) {
             console.log('PayPal button is not eligible');
             return;
         }
-        
+
         // Render the button
         console.log('Rendering PayPal button...');
-        button.render('#paypal-button-container').catch(function(error) {
+        paypalButtonInstance.render('#paypal-button-container').catch(function(error) {
             console.error('Failed to render PayPal button:', error);
         });
 
