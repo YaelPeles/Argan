@@ -339,17 +339,12 @@ function initializePayments() {
         console.log('Cart contents:', cart);
         
         if (!cart || !Array.isArray(cart) || cart.length === 0) {
-            console.log('Cart is empty or invalid');
-            showPaymentError(translations[currentLanguage].cart_empty);
             return;
         }
 
         const cartTotal = calculateCartTotal();
-        console.log('Cart total:', cartTotal);
         
         if (!cartTotal || cartTotal <= 0) {
-            console.log('Cart total is zero or invalid');
-            showPaymentError(translations[currentLanguage].cart_empty);
             return;
         }
 
@@ -396,8 +391,7 @@ function initializePayments() {
                 try {
                     // Get current cart total in case it changed
                     const currentTotal = calculateCartTotal();
-                    console.log('Creating PayPal order with total:', currentTotal);
-                    console.log('PayPal Client ID being used:', window.PAYPAL_CLIENT_ID);
+                    console.log('Processing payment...');
                     
                     if (currentTotal <= 0) {
                         showPaymentError(translations[currentLanguage].cart_empty);
@@ -446,12 +440,9 @@ function initializePayments() {
                 }
             },
             onApprove: function(data, actions) {
-                console.log('Payment approved, capturing order...');
+                // Process payment
                 return actions.order.capture().then(function(details) {
-                    console.log('Payment completed successfully. Full details:', JSON.stringify(details, null, 2));
-                    console.log('Payment source:', details.payment_source);
-                    console.log('Transaction ID:', details.id);
-                    console.log('Merchant ID:', details.purchase_units[0]?.payee?.merchant_id);
+                    console.log('Payment completed successfully.');
                     
                     try {
                         // Handle successful payment
