@@ -363,9 +363,9 @@
     <script src="translations.js"></script>
     
     <!-- Load PayPal SDK before payment.js -->
+    <script src="paypal-config-local.js"></script>
     <script>
-        // PayPal configuration - injected during deployment
-        const paypalClientId = '%%PAYPAL_CLIENT_ID%%';
+        // For production, this will be replaced during deployment
         
         // Dynamically create PayPal script
         const paypalScript = document.createElement('script');
