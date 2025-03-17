@@ -19,6 +19,9 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://argans.co.il/images/logo.jpeg">
     <link rel="canonical" href="https://argans.co.il">
+    <style>
+        .checkout-button { pointer-events: none; }
+    </style>
     
     <script type="application/ld+json">
     {
@@ -133,7 +136,7 @@
                     <span class="total-amount">₪0</span>
                 </div>
                 <div class="checkout-container">
-                    <button class="checkout-button" data-i18n="checkout">לתשלום</button>
+                    <button class="checkout-button no-click" data-i18n="checkout">לתשלום</button>
                     <div class="payment-form" style="display: none;">
                         <h3 class="payment-title" data-i18n="payment_details">פרטי תשלום</h3>
                         <div class="order-summary">
