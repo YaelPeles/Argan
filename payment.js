@@ -397,6 +397,7 @@ function initializePayments() {
                     // Get current cart total in case it changed
                     const currentTotal = calculateCartTotal();
                     console.log('Creating PayPal order with total:', currentTotal);
+                    console.log('PayPal Client ID being used:', window.PAYPAL_CLIENT_ID);
                     
                     if (currentTotal <= 0) {
                         showPaymentError(translations[currentLanguage].cart_empty);
@@ -447,7 +448,10 @@ function initializePayments() {
             onApprove: function(data, actions) {
                 console.log('Payment approved, capturing order...');
                 return actions.order.capture().then(function(details) {
-                    console.log('Payment completed successfully:', details);
+                    console.log('Payment completed successfully. Full details:', JSON.stringify(details, null, 2));
+                    console.log('Payment source:', details.payment_source);
+                    console.log('Transaction ID:', details.id);
+                    console.log('Merchant ID:', details.purchase_units[0]?.payee?.merchant_id);
                     
                     try {
                         // Handle successful payment
