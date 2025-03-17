@@ -363,7 +363,7 @@
     
     <!-- Load PayPal SDK before payment.js -->
     <script>
-        const paypalClientId = 'AdNnm8L-kyOWzawRyF55lg0ZCwJJzMR715IZ7ymcocNqQsIXZB2SzXzEorkeN0yA2JiEyftA5_IT0R3u';
+        const paypalClientId = '%%PAYPAL_CLIENT_ID%%';
         const paypalScript = document.createElement('script');
         paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
         document.head.appendChild(paypalScript);

@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # or your default branch
+      - main
 
 permissions:
   contents: write
@@ -15,21 +15,16 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Inject PayPal Client ID
+      - name: Replace PayPal Client ID
+        env:
+          PAYPAL_CLIENT_ID: ${{ secrets.PAYPAL_CLIENT_ID }}
         run: |
-          # Verify secret exists (safely)
-          if [ ! -z "${{ secrets.PAYPAL_CLIENT_ID }}" ]; then
-            echo "✓ PayPal Client ID is set and not empty"
-            echo "window.PAYPAL_CLIENT_ID = '${{ secrets.PAYPAL_CLIENT_ID }}';" > paypal-config.js
-            echo "✓ Created paypal-config.js"
-          else
-            echo "❌ Error: PAYPAL_CLIENT_ID secret is not set"
+          if [ -z "$PAYPAL_CLIENT_ID" ]; then
+            echo "Error: PAYPAL_CLIENT_ID secret is not set"
             exit 1
           fi
-
-      - name: Update HTML to include config
-        run: |
-          sed -i '/<head>/a \    <script src="paypal-config.js"></script>' index.html
+          # Safely replace the placeholder with the actual Client ID
+          sed -i "s/%%PAYPAL_CLIENT_ID%%/$PAYPAL_CLIENT_ID/g" index.html
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
