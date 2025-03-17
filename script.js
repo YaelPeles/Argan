@@ -127,17 +127,37 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 function updateCartDisplay() {
     const cartItems = document.querySelector('.cart-items');
     const totalAmount = document.querySelector('.total-amount');
+    const checkoutButton = document.querySelector('.checkout-button');
+    
+    if (!cartItems || !totalAmount) return;
+    
+    // Get latest cart data
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
     cartItems.innerHTML = '';
     let total = 0;
 
+    if (cart.length === 0) {
+        const emptyCartMessage = document.createElement('div');
+        emptyCartMessage.className = 'empty-cart-message';
+        emptyCartMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
+        cartItems.appendChild(emptyCartMessage);
+        totalAmount.textContent = '₪0';
+        if (checkoutButton) checkoutButton.style.display = 'none';
+        return;
+    }
+
+    if (checkoutButton) checkoutButton.style.display = 'block';
+
     cart.forEach((item, index) => {
+        if (!item || !item.price || !item.quantity) return;
+        
         const cartItem = document.createElement('div');
         cartItem.className = 'cart-item';
         cartItem.innerHTML = `
-            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+            <img src="${item.image || ''}" alt="${item.name || ''}" class="cart-item-image">
             <div class="cart-item-details">
-                <span class="cart-item-name">${item.name}</span>
-                <span class="cart-item-size">${item.size}</span>
+                <span class="cart-item-name">${item.name || ''}</span>
+                <span class="cart-item-size">${item.size || ''}</span>
                 <span class="cart-item-price">₪${item.price}</span>
             </div>
             <div class="quantity-controls">
@@ -147,40 +167,76 @@ function updateCartDisplay() {
             </div>
         `;
         cartItems.appendChild(cartItem);
-        total += item.price * item.quantity;
+        total += (item.price * item.quantity);
     });
 
     totalAmount.textContent = `₪${total.toFixed(2)}`;
     updateCartCount();
+    
+    // Save the cleaned cart data
+    saveCartToLocalStorage();
 }
 
 function updateQuantity(index, change) {
+    // Get latest cart data
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
+    if (index < 0 || index >= cart.length) {
+        console.error('Invalid cart index:', index);
+        return;
+    }
+
     const item = cart[index];
-    const newQuantity = item.quantity + change;
+    if (!item) {
+        console.error('Invalid item at index:', index);
+        return;
+    }
+
+    const newQuantity = (parseInt(item.quantity) || 1) + change;
     
     if (newQuantity > 0) {
         item.quantity = newQuantity;
+        cart[index] = item;
     } else {
         cart.splice(index, 1);
     }
     
-    updateCartDisplay();
     saveCartToLocalStorage();
+    updateCartDisplay();
 }
 
 function addToCart(product) {
+    if (!product || !product.id || !product.size || !product.price) {
+        console.error('Invalid product data:', product);
+        return;
+    }
+
+    // Ensure quantity is valid
+    product.quantity = parseInt(product.quantity) || 1;
+    if (product.quantity <= 0) product.quantity = 1;
+
+    // Get latest cart data
+    cart = JSON.parse(localStorage.getItem('cart')) || [];
+    
     const existingItemIndex = cart.findIndex(item => 
-        item.id === product.id && item.size === product.size
+        item && item.id === product.id && item.size === product.size
     );
 
     if (existingItemIndex !== -1) {
         cart[existingItemIndex].quantity += product.quantity;
     } else {
-        cart.push(product);
+        cart.push({
+            id: product.id,
+            name: product.name || `שמן ארגן - ${product.size}מ"ל`,
+            price: parseFloat(product.price) || 0,
+            quantity: product.quantity,
+            size: product.size,
+            image: product.image || 'images/products/bottle.jpeg'
+        });
     }
 
-    updateCartDisplay();
     saveCartToLocalStorage();
+    updateCartDisplay();
     showCartModal();
 }
 
@@ -241,13 +297,116 @@ function updateCartCount() {
     }
 }
 
-// Initialize cart on page load
+// Initialize cart and payment system on page load
 document.addEventListener('DOMContentLoaded', () => {
     updateCartDisplay();
     updateCartCount();
+
+    // Initialize cart modal close button
+    const closeCartButton = document.querySelector('.close-cart');
+    if (closeCartButton) {
+        closeCartButton.addEventListener('click', () => {
+            document.querySelector('.cart-modal').classList.remove('active');
+        });
+    }
+
+    // Initialize checkout button
+    const checkoutButton = document.querySelector('.checkout-button');
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            console.log('Checkout clicked, cart:', cart); // Debug log
+
+            // Validate cart
+            if (!cart || !Array.isArray(cart) || cart.length === 0) {
+                console.log('Cart validation failed'); // Debug log
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'payment-error';
+                errorMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
+                const cartFooter = document.querySelector('.cart-footer');
+                if (cartFooter) {
+                    // Remove any existing error messages
+                    const existingErrors = cartFooter.querySelectorAll('.payment-error');
+                    existingErrors.forEach(error => error.remove());
+                    cartFooter.appendChild(errorMessage);
+                    setTimeout(() => errorMessage.remove(), 3000);
+                }
+                return;
+            }
+
+            // Show payment options if cart is valid
+            showPaymentOptions();
+            // Initialize payments
+            if (typeof initializePayments === 'function') {
+                initializePayments();
+            }
+        });
+    }
 });
 
-// Open/Close Cart
+// Cart Modal Functions
+function showCartModal() {
+    const cartModal = document.querySelector('.cart-modal');
+    if (cartModal) {
+        cartModal.classList.add('active');
+        // Reset payment state
+        const checkoutButton = document.querySelector('.checkout-button');
+        const paymentMethods = document.querySelector('.payment-methods');
+        if (checkoutButton && paymentMethods) {
+            checkoutButton.style.display = 'block';
+            paymentMethods.style.display = 'none';
+        }
+    }
+}
+
+function hideCartModal() {
+    const cartModal = document.querySelector('.cart-modal');
+    if (cartModal) {
+        cartModal.classList.remove('active');
+    }
+}
+
+// Payment Functions
+function showPaymentOptions() {
+    console.log('Showing payment options...');
+    const checkoutButton = document.querySelector('.checkout-button');
+    const paymentMethods = document.querySelector('.payment-methods');
+    const paymentOptions = document.querySelector('.payment-options');
+    
+    if (checkoutButton && paymentMethods) {
+        // Hide checkout button and show payment methods
+        checkoutButton.style.display = 'none';
+        paymentMethods.style.display = 'block';
+        
+        // Show PayPal container directly
+        const paypalContainer = document.querySelector('#paypal-button-container');
+        if (paypalContainer) {
+            paypalContainer.style.display = 'block';
+            // Initialize PayPal
+            if (typeof initializePayments === 'function') {
+                initializePayments();
+            } else {
+                console.error('initializePayments function not found');
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'payment-error';
+                errorMessage.textContent = translations[currentLanguage].payment_error || 'שגיאה בטעינת אמצעי התשלום';
+                const cartFooter = document.querySelector('.cart-footer');
+                if (cartFooter) {
+                    cartFooter.appendChild(errorMessage);
+                    setTimeout(() => errorMessage.remove(), 3000);
+                }
+            }
+        }
+    } else {
+        console.error('Required elements not found:', {
+            checkoutButton: !!checkoutButton,
+            paymentMethods: !!paymentMethods
+        });
+    }
+}
+
+// Cart Icon Click Handler
 const cartIcon = document.querySelector('.cart-icon');
 const closeCart = document.querySelector('.close-cart');
 const cartModal = document.getElementById('cart-modal');
@@ -299,25 +458,31 @@ document.querySelectorAll('.size-btn').forEach(button => {
 // Initialize with 250ml selected
 window.addEventListener('DOMContentLoaded', (event) => {
     const defaultSizeBtn = document.querySelector('.size-btn[data-size="250"]');
+
+    // Add checkout button event listener
+    const checkoutButton = document.querySelector('.checkout-button');
+    if (checkoutButton) {
+        checkoutButton.addEventListener('click', function() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart.length === 0) {
+                const errorMessage = document.createElement('div');
+                errorMessage.className = 'payment-error';
+                errorMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
+                document.querySelector('.cart-footer').appendChild(errorMessage);
+                
+                setTimeout(() => {
+                    errorMessage.remove();
+                }, 3000);
+                return;
+            }
+            showPaymentOptions();
+        });
+    }
     if (defaultSizeBtn) {
         defaultSizeBtn.click();
     }
 });
 
-// Checkout Process
-const checkoutButton = document.querySelector('.checkout-button');
-
-checkoutButton.addEventListener('click', () => {
-    if (cart.length === 0) {
-        alert('העגלה ריקה');
-        return;
-    }
-
-    // Here you would typically integrate with a payment processor
-    // For now, we'll just show a success message
-    alert('מעבר לתשלום...');
-    // You can add your payment processing logic here
-});
 
 // Header Scroll Effect
 const header = document.querySelector('.main-header');

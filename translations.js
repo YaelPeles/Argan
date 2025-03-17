@@ -1,5 +1,45 @@
-var translations = {
+// Initialize translations object
+window.translations = {
     he: {
+        // Order summary translations
+        order_summary: 'סיכום הזמנה',
+        order_details: 'פרטי הזמנה',
+        quantity: 'כמות',
+        unit_price: 'מחיר ליחידה',
+        subtotal: 'סה"כ ביניים',
+        order_confirmation: 'אישור הזמנה',
+        order_number: 'מספר הזמנה',
+        order_date: 'תאריך הזמנה',
+        
+        // Contact information translations
+        contact_info: 'פרטי התקשרות',
+        full_name: 'שם מלא',
+        email: 'דוא"ל',
+        phone: 'טלפון',
+        address: 'כתובת למשלוח',
+        payment_info: 'פרטי תשלום',
+        
+        // Email confirmation translations
+        email_subject: 'אישור הזמנה - Saveurs d\'Argan',
+        thank_you: 'תודה על הזמנתך!',
+        order_processing: 'הזמנתך בתהליך עיבוד',
+        shipping_info: 'פרטי משלוח',
+        payment_confirmation: 'אישור תשלום',
+        transaction_id: 'מספר עסקה',
+
+        // Credit card form translations
+        payment_details: 'פרטי תשלום',
+        card_number: 'מספר כרטיס',
+        expiry_date: 'תוקף',
+        cvv: 'CVV',
+        card_holder: 'שם בעל הכרטיס',
+        pay_now: 'שלם עכשיו',
+        processing: 'מעבד...',
+        fill_all_fields: 'נא למלא את כל השדות',
+        invalid_card: 'מספר כרטיס לא תקין',
+        invalid_expiry: 'תאריך תפוגה לא תקין',
+        invalid_cvv: 'קוד CVV לא תקין',
+
         title: "Saveurs d'Argan - שמן ארגן למאכל",
         brand_name: "Saveurs d'Argan",
         home: "בית",
@@ -49,6 +89,9 @@ var translations = {
         natural: "100% טבעי",
         kosher_badge: "כשר בהשגחת הבד״ץ",
         kosher_cert_link: "לצפייה בתעודת הכשרות",
+        payment_success: "התשלום התקבל בהצלחה! תודה על הקנייה.",
+        payment_error: "התשלום נכשל. אנא נסה שוב.",
+        cart_empty: "העגלה ריקה",
         product_badge: "100% טבעי",
         product_title: "שמן ארגן למאכל טהור",
         product_description: "שמן ארגן למאכל 100% טהור ואורגני בכשרות מהודרת. מיוצר בתהליך מסורתי תוך שמירה על איכות ללא פשרות.",
@@ -56,13 +99,12 @@ var translations = {
         size_label_250: "250 מ\"ל",
         size_selector_title: "בחר גודל:",
         about_title: "הסיפור שלנו",
-        story_text: "הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן ארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדלים עצי הארגן, נחשפנו לראשונה לטעמו הייחודי והעשיר של שמן הארגן למאכל.",
+        story_text: "הסיפור שלנו מתחיל במסע קסום למרוקו, שם התאהבנו לא רק בנופים המרהיבים ובתרבות העשירה, אלא גם באוצר קולינרי נדיר - שמן ארגן. בביקור באזור דרום-מערב מרוקו, המקום היחיד בעולם בו גדל עץ הארגן, גילינו את הזהב הנוזלי של מרוקו.",
+        delivery_title: "מידע על משלוחים ואיסוף עצמי",
+        delivery_info: "אנו מתחייבים לספק את המוצר תוך 14 ימי עסקים. אזורי המשלוח כוללים את ערי המרכז, השרון והשפלה כגון: תל אביב, רמת גן, פתח תקווה, הרצליה, ירושלים, רעננה, כפר סבא, הוד השרון, ראשון לציון, חולון, בת ים, רחובות ונס ציונה. לערים אחרות, אנא צרו איתנו קשר.",
+        delivery_note: "*המשלוח הינו בכפוף לתנאי המשלוח ולאזורי החלוקה המוגדרים",
         story_text_2: "מתוך התשוקה הזו נולדה Saveurs d'Argan. החזון שלנו היה פשוט - להביא לישראל את שמן הארגן למאכל האיכותי ביותר, המיוצר בתהליך מסורתי ומוקפד.",
         story_text_3: "כיום, אנחנו גאים להציע שמן ארגן למאכל פרימיום, המשלב בין המסורת העתיקה של מרוקו לבין הסטנדרטים הגבוהים ביותר של איכות ובטיחות. כל בקבוק מכיל את תמצית האהבה שלנו למוצר הייחודי הזה ואת המחויבות שלנו להביא לשולחנכם את הטוב ביותר.",
-
-        delivery_title: "מידע על משלוחים ואיסוף עצמי",
-        delivery_subtitle: "נקודות איסוף עצמי",
-        delivery_note: "יש לתאם טלפונית לפני הגעה",
         pickup_locations: [
             "ירושלים",
             "הרצליה",
@@ -74,6 +116,45 @@ var translations = {
         message_error: "שליחת ההודעה נכשלה. אנא נסה שוב.",
     },
     en: {
+        // Order summary translations
+        order_summary: 'Order Summary',
+        order_details: 'Order Details',
+        quantity: 'Quantity',
+        unit_price: 'Unit Price',
+        subtotal: 'Subtotal',
+        order_confirmation: 'Order Confirmation',
+        order_number: 'Order Number',
+        order_date: 'Order Date',
+        
+        // Contact information translations
+        contact_info: 'Contact Information',
+        full_name: 'Full Name',
+        email: 'Email',
+        phone: 'Phone',
+        address: 'Shipping Address',
+        payment_info: 'Payment Information',
+        
+        // Email confirmation translations
+        email_subject: 'Order Confirmation - Saveurs d\'Argan',
+        thank_you: 'Thank you for your order!',
+        order_processing: 'Your order is being processed',
+        shipping_info: 'Shipping Information',
+        payment_confirmation: 'Payment Confirmation',
+        transaction_id: 'Transaction ID',
+
+        // Credit card form translations
+        payment_details: 'Payment Details',
+        card_number: 'Card Number',
+        expiry_date: 'Expiry Date',
+        cvv: 'CVV',
+        card_holder: 'Card Holder Name',
+        pay_now: 'Pay Now',
+        processing: 'Processing...',
+        fill_all_fields: 'Please fill all fields',
+        invalid_card: 'Invalid card number',
+        invalid_expiry: 'Invalid expiry date',
+        invalid_cvv: 'Invalid CVV',
+
         title: "Saveurs d'Argan - Edible Argan Oil",
         brand_name: "Saveurs d'Argan",
         home: "Home",
@@ -146,6 +227,8 @@ var translations = {
         delivery_coming_soon: "* Full delivery terms will be added soon",
         message_sent: "Message sent successfully!",
         message_error: "Failed to send message. Please try again.",
+        payment_success: "Payment successful! Thank you for your purchase.",
+        payment_error: "Payment failed. Please try again.",
     },
     fr: {
         title: "Saveurs d'Argan - Huile d'Argan Alimentaire",
@@ -206,10 +289,7 @@ var translations = {
         about_title: "Notre Histoire",
         story_text: "Notre histoire commence par un voyage magique au Maroc, où nous sommes tombés amoureux non seulement des paysages à couper le souffle et de la riche culture, mais aussi d'un trésor culinaire rare - l'huile d'Argan. Lors de notre visite dans le sud-ouest du Maroc, le seul endroit au monde où poussent les arganiers, nous avons découvert pour la première fois le goût unique et riche de l'huile d'Argan alimentaire.",
         story_text_2: "C'est de cette passion qu'est née Saveurs d'Argan. Notre vision était simple - apporter en Israël l'huile d'argan alimentaire de la plus haute qualité, produite selon un processus traditionnel et méticuleux.",
-        story_text_3: "Aujourd'hui, nous sommes fiers de proposer une huile d'argan alimentaire premium qui allie la tradition ancestrale du Maroc aux plus hauts standards de qualité et de sécurité. Chaque bouteille contient notre amour pour ce produit unique et notre engagement à vous apporter le meilleur.",
-
-
-
+        story_text_3: "Aujourd'hui, nous sommes fiers de proposer une huile d'argan alimentaire premium qui allie la tradition ancestrale du Maroc aux plus hauts standards de qualité et de sécurité. Chaque bouteille contient l'essence de notre amour pour ce produit unique et notre engagement à vous apporter le meilleur.",
         delivery_title: "Informations de Livraison et Points de Retrait",
         delivery_subtitle: "Points de Retrait",
         delivery_note: "Veuillez appeler avant votre arrivée",
@@ -219,8 +299,25 @@ var translations = {
             "Petah Tikva",
             "Tel Aviv"
         ].join('|'),
-        delivery_coming_soon: "* Les conditions de livraison complètes seront ajoutées prochainement",
-        message_sent: "Message envoyé avec succès!",
+        delivery_coming_soon: "* Conditions de livraison complètes à venir",
+        message_sent: "Message envoyé avec succès !",
         message_error: "Échec de l'envoi du message. Veuillez réessayer.",
+        payment_success: "Paiement réussi ! Merci pour votre achat.",
+        payment_error: "Le paiement a échoué. Veuillez réessayer."
     }
 };
+
+// Set default language
+window.currentLanguage = 'he';
+
+// Initialize translations when the DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Apply initial translations
+    const elements = document.querySelectorAll('[data-i18n]');
+    elements.forEach(element => {
+        const key = element.getAttribute('data-i18n');
+        if (translations[currentLanguage] && translations[currentLanguage][key]) {
+            element.textContent = translations[currentLanguage][key];
+        }
+    });
+});

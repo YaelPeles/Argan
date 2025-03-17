@@ -79,6 +79,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Great+Vibes&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="bsd">בס״ד</div>
@@ -131,7 +132,22 @@
                     <span data-i18n="total">סה"כ:</span>
                     <span class="total-amount">₪0</span>
                 </div>
-                <button class="checkout-button" data-i18n="checkout">לתשלום</button>
+                <div class="checkout-container">
+                    <button class="checkout-button" data-i18n="checkout">לתשלום</button>
+                    <div class="payment-form" style="display: none;">
+                        <h3 class="payment-title" data-i18n="payment_details">פרטי תשלום</h3>
+                        <div class="order-summary">
+                            <h4 data-i18n="order_summary">סיכום הזמנה</h4>
+                            <div class="order-items"></div>
+                            <div class="order-total">
+                                <span data-i18n="total">סה"כ:</span>
+                                <span class="total-amount">₪0</span>
+                            </div>
+                        </div>
+                        <!-- PayPal Button Container -->
+                        <div id="paypal-button-container" class="paypal-button-container"></div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -292,20 +308,6 @@
         </div>
     </section>
 
-    <section id="delivery" class="delivery-section">
-        <div class="section-content">
-            <h2 class="section-title" data-i18n="delivery_title">מידע על הזמנות</h2>
-            <div class="delivery-info">
-                <p class="delivery-text">כרגע האתר תומך בהזמנות טלפוניות בלבד</p>
-                <p class="phone-number">
-                    <span class="material-icons">phone</span>
-                    053-6111959
-                </p>
-                <p class="delivery-text">צרו קשר או השאירו הודעה</p>
-            </div>
-        </div>
-    </section>
-
     <section id="contact" class="contact-section">
         <div class="section-content">
             <h2 class="section-title" data-i18n="contact_title">צור קשר</h2>
@@ -336,6 +338,14 @@
         </div>
     </section>
 
+    <section class="delivery-section">
+        <div class="section-content">
+            <h3 class="section-title" data-i18n="delivery_title">מידע על משלוחים ואיסוף עצמי</h3>
+            <p class="delivery-info" data-i18n="delivery_info">אנו מתחייבים לספק את המוצר תוך 14 ימי עסקים. אזורי המשלוח כוללים את תל אביב, רמת גן, פתח תקווה, הרצליה וירושלים. לערים אחרות, אנא צרו איתנו קשר.</p>
+            <p class="delivery-note" data-i18n="delivery_note">*המשלוח הינו בכפוף לתנאי המשלוח ולאזורי החלוקה המוגדרים</p>
+        </div>
+    </section>
+
     <footer class="main-footer">
         <div class="footer-content">
             <p data-i18n="footer"> 2024 שמן ארגן למאכל. כל הזכויות שמורות.</p>
@@ -347,14 +357,31 @@
         </div>
     </footer>
 
+    <!-- Load dependencies first -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script src="translations.js"></script>
+    <script src="paypal-config.js"></script>
+    
+    <!-- Load PayPal SDK before payment.js -->
+    <script>
+        // Get PayPal client ID from environment or use sandbox for development
+        const paypalClientId = window.PAYPAL_CLIENT_ID || 'AdNnm8L-kyOWzawRyF55lg0ZCwJJzMR715IZ7ymcocNqQsIXZB2SzXzEorkeN0yA2JiEyftA5_IT0R3u';
+        
+        // Dynamically create PayPal script
+        const paypalScript = document.createElement('script');
+        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
+        document.head.appendChild(paypalScript);
+    </script>
+    
+    <!-- Initialize email service -->
     <script>
         (function() {
-            // Initialize with just init()
             emailjs.init();
         })();
     </script>
-    <script src="translations.js"></script>
+    
+    <!-- Load application scripts -->
+    <script src="payment.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
