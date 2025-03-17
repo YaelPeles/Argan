@@ -315,24 +315,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (checkoutButton) {
         checkoutButton.addEventListener('click', (e) => {
             e.preventDefault();
-            const cart = JSON.parse(localStorage.getItem('cart')) || [];
-            
-            // Validate cart
-            if (!cart || !Array.isArray(cart) || cart.length === 0) {
-                console.log('Cart is empty');
-                return;
-            }
-
-            // Hide checkout button and show PayPal container
-            checkoutButton.style.display = 'none';
-            const paypalContainer = document.getElementById('paypal-button-container');
-            if (paypalContainer) {
-                paypalContainer.style.display = 'block';
-                // Initialize PayPal buttons
-                if (typeof initializePayments === 'function') {
-                    initializePayments();
-                }
-            }
+            e.stopPropagation();
+            return false;
         });
     }
 });
