@@ -13,7 +13,15 @@ jobs:
 
       - name: Inject PayPal Client ID
         run: |
-          echo "window.PAYPAL_CLIENT_ID = '${{ secrets.PAYPAL_CLIENT_ID }}';" > paypal-config.js
+          # Verify secret exists (safely)
+          if [ ! -z "${{ secrets.PAYPAL_CLIENT_ID }}" ]; then
+            echo "✓ PayPal Client ID is set and not empty"
+            echo "window.PAYPAL_CLIENT_ID = '${{ secrets.PAYPAL_CLIENT_ID }}';" > paypal-config.js
+            echo "✓ Created paypal-config.js"
+          else
+            echo "❌ Error: PAYPAL_CLIENT_ID secret is not set"
+            exit 1
+          fi
 
       - name: Update HTML to include config
         run: |
