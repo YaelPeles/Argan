@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="400" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+    <!-- Bottle Shape -->
+    <path d="M100,50 L200,50 L220,100 L220,350 Q220,380 200,380 L100,380 Q80,380 80,350 L80,100 Z" 
+          fill="#f4e4bc" stroke="#9c7c38" stroke-width="3"/>
+    
+    <!-- Label -->
+    <rect x="90" y="120" width="120" height="200" fill="#fff" stroke="#9c7c38"/>
+    
+    <!-- Logo Text -->
+    <text x="150" y="160" text-anchor="middle" font-family="Great Vibes, cursive" font-size="24" fill="#1e3c72">
+        Saveurs d'Argan
+    </text>
+    
+    <!-- Hebrew Text -->
+    <text x="150" y="190" text-anchor="middle" font-family="Arial" font-size="14" fill="#333">
+        שמן ארגן למאכל פרימיום
+    </text>
+    
+    <!-- Bottle Cap -->
+    <path d="M120,30 L180,30 L190,50 L110,50 Z" fill="#9c7c38"/>
+</svg>
