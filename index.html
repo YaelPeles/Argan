@@ -365,8 +365,19 @@
     <script>
         const paypalClientId = '%%PAYPAL_CLIENT_ID%%';
         const paypalScript = document.createElement('script');
-        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL&enable-funding=card,credit`;
-        document.head.appendChild(paypalScript);
+        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
+        paypalScript.async = true;
+        paypalScript.defer = true;
+        paypalScript.onload = function() {
+            console.log('PayPal SDK loaded successfully');
+            if (typeof initializePayments === 'function') {
+                initializePayments();
+            }
+        };
+        paypalScript.onerror = function(error) {
+            console.error('Failed to load PayPal SDK:', error);
+        };
+        document.body.appendChild(paypalScript);
     </script>
     
     <!-- Initialize email service -->
