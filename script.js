@@ -166,12 +166,20 @@ function directPurchase(catalogNumber, quantity) {
     console.log(`Opening direct purchase for Argan culinary oil`);
     console.log('Payment URL:', growPaymentUrl);
     
-    // Remove success message after 2 seconds and redirect
+    // For mobile devices, we need a more reliable approach
+    // First, try direct window location change which is more reliable on mobile
     setTimeout(() => {
         successMessage.remove();
-        // Open the payment URL in a new tab
-        window.open(growPaymentUrl, '_blank');
-    }, 2000);
+        
+        // Try multiple approaches to ensure it works across all devices
+        // 1. First attempt: window.location approach
+        window.location.href = growPaymentUrl;
+        
+        // 2. Fallback: If the above doesn't redirect within 100ms, try window.open
+        setTimeout(() => {
+            window.open(growPaymentUrl, '_blank');
+        }, 100);
+    }, 1000);
 }
 
 
