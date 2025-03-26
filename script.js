@@ -120,263 +120,101 @@ document.getElementById('contact-form').addEventListener('submit', function(even
         });
 });
 
-// Shopping Cart Functionality
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+// Product Selection and Purchase Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // No product selection functionality needed anymore
+    console.log('Direct purchase mode active');
+});
 
-// Update cart UI function
-function updateCartDisplay() {
-    const cartItems = document.querySelector('.cart-items');
-    const totalAmount = document.querySelector('.total-amount');
-    const checkoutButton = document.querySelector('.checkout-button');
+
+
+
+
+// Direct Purchase Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add event listener for Buy Now button
+    const buyNowButton = document.querySelector('.buy-now-btn');
     
-    if (!cartItems || !totalAmount) return;
-    
-    // Get latest cart data
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    cartItems.innerHTML = '';
-    let total = 0;
-
-    if (cart.length === 0) {
-        const emptyCartMessage = document.createElement('div');
-        emptyCartMessage.className = 'empty-cart-message';
-        emptyCartMessage.textContent = translations[currentLanguage].cart_empty || 'העגלה ריקה';
-        cartItems.appendChild(emptyCartMessage);
-        totalAmount.textContent = '₪0';
-        if (checkoutButton) checkoutButton.style.display = 'none';
-        return;
-    }
-
-    if (checkoutButton) checkoutButton.style.display = 'block';
-
-    cart.forEach((item, index) => {
-        if (!item || !item.price || !item.quantity) return;
-        
-        const cartItem = document.createElement('div');
-        cartItem.className = 'cart-item';
-        cartItem.innerHTML = `
-            <img src="${item.image || ''}" alt="${item.name || ''}" class="cart-item-image">
-            <div class="cart-item-details">
-                <span class="cart-item-name">${item.name || ''}</span>
-                <span class="cart-item-size">${item.size || ''}</span>
-                <span class="cart-item-price">₪${item.price}</span>
-            </div>
-            <div class="quantity-controls">
-                <button class="quantity-btn minus" onclick="updateQuantity(${index}, -1)">-</button>
-                <span class="quantity-display">${item.quantity}</span>
-                <button class="quantity-btn plus" onclick="updateQuantity(${index}, 1)">+</button>
-            </div>
-        `;
-        cartItems.appendChild(cartItem);
-        total += (item.price * item.quantity);
-    });
-
-    totalAmount.textContent = `₪${total.toFixed(2)}`;
-    updateCartCount();
-    
-    // Save the cleaned cart data
-    saveCartToLocalStorage();
-}
-
-function updateQuantity(index, change) {
-    // Get latest cart data
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    if (index < 0 || index >= cart.length) {
-        console.error('Invalid cart index:', index);
-        return;
-    }
-
-    const item = cart[index];
-    if (!item) {
-        console.error('Invalid item at index:', index);
-        return;
-    }
-
-    const newQuantity = (parseInt(item.quantity) || 1) + change;
-    
-    if (newQuantity > 0) {
-        item.quantity = newQuantity;
-        cart[index] = item;
-    } else {
-        cart.splice(index, 1);
-    }
-    
-    saveCartToLocalStorage();
-    updateCartDisplay();
-}
-
-function addToCart(product) {
-    if (!product || !product.id || !product.size || !product.price) {
-        console.error('Invalid product data:', product);
-        return;
-    }
-
-    // Ensure quantity is valid
-    product.quantity = parseInt(product.quantity) || 1;
-    if (product.quantity <= 0) product.quantity = 1;
-
-    // Get latest cart data
-    cart = JSON.parse(localStorage.getItem('cart')) || [];
-    
-    const existingItemIndex = cart.findIndex(item => 
-        item && item.id === product.id && item.size === product.size
-    );
-
-    if (existingItemIndex !== -1) {
-        cart[existingItemIndex].quantity += product.quantity;
-    } else {
-        cart.push({
-            id: product.id,
-            name: product.name || `שמן ארגן - ${product.size}מ"ל`,
-            price: parseFloat(product.price) || 0,
-            quantity: product.quantity,
-            size: product.size,
-            image: product.image || 'images/products/bottle.jpeg'
+    if (buyNowButton) {
+        buyNowButton.addEventListener('click', function() {
+            // Always use catalog number 1 (250ml bottle) with quantity 1
+            const catalogNumber = '1';
+            const quantity = 1;
+            
+            directPurchase(catalogNumber, quantity);
         });
     }
+});
 
-    saveCartToLocalStorage();
-    updateCartDisplay();
-    showCartModal();
-}
-
-function saveCartToLocalStorage() {
-    localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function showCartModal() {
-    const cartModal = document.querySelector('.cart-modal');
-    if (cartModal) {
-        cartModal.classList.add('active');
-    }
-}
-
-// Add to Cart functionality
-document.querySelector('.add-to-cart-btn').addEventListener('click', function() {
-    const quantity = parseInt(document.querySelector('.quantity-input').value);
-    const selectedSize = document.querySelector('.size-btn.active').dataset.size;
-    const selectedPrice = parseInt(document.querySelector('.size-btn.active').dataset.price);
+// Function to handle direct purchase via Grow payment link
+function directPurchase(catalogNumber, quantity) {
+    if (quantity <= 0) quantity = 1;
     
-    const product = {
-        id: `argan-oil-${selectedSize}`,
-        name: `שמן ארגן למאכל - ${selectedSize} מ"ל`,
-        price: selectedPrice,
-        quantity: quantity,
-        size: `${selectedSize} מ"ל`,
-        image: 'images/products/bottle.jpeg'
-    };
-
-    addToCart(product);
-
-    // Show success message
+    // Base URL with merchant ID
+    let growPaymentUrl = 'https://pay.grow.link/889c0323deea09c8b0b82378c79bf387-MTg3OTMwNw';
+    
+    // Add product with quantity to URL
+    growPaymentUrl += `/${catalogNumber}:${quantity}`;
+    
+    // Create a generic success message
     const successMessage = document.createElement('div');
     successMessage.className = 'success-message';
-    successMessage.textContent = 'המוצר נוסף לעגלה בהצלחה!';
+    successMessage.textContent = 'מעביר אותך לתשלום עבור שמן ארגן למאכל';
     document.body.appendChild(successMessage);
-
-    // Remove success message after 3 seconds
+    
+    // Log the URL for debugging
+    console.log(`Opening direct purchase for Argan culinary oil`);
+    console.log('Payment URL:', growPaymentUrl);
+    
+    // Remove success message after 2 seconds and redirect
     setTimeout(() => {
         successMessage.remove();
-    }, 3000);
-});
-
-// Remove from cart function
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    saveCartToLocalStorage();
-    updateCartDisplay();
+        // Open the payment URL in a new tab
+        window.open(growPaymentUrl, '_blank');
+    }, 2000);
 }
 
-// Update cart count function
-function updateCartCount() {
-    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-    const cartCount = document.querySelector('.cart-count');
-    if (cartCount) {
-        cartCount.textContent = totalItems;
-        cartCount.style.display = totalItems > 0 ? 'block' : 'none';
-    }
-}
 
-// Initialize cart system on page load
-document.addEventListener('DOMContentLoaded', () => {
-    updateCartDisplay();
-    updateCartCount();
 
-    // Initialize cart modal close button
-    const closeCartButton = document.querySelector('.close-cart');
-    if (closeCartButton) {
-        closeCartButton.addEventListener('click', () => {
-            document.querySelector('.cart-modal').classList.remove('active');
-        });
-    }
 
-    // Initialize checkout button
-    const checkoutButton = document.querySelector('.checkout-button');
-    if (checkoutButton) {
-        checkoutButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            return false;
-        });
-    }
-});
 
-// Cart Modal Functions
-function showCartModal() {
-    const cartModal = document.querySelector('.cart-modal');
-    if (cartModal) {
-        cartModal.classList.add('active');
-        // Reset payment state
-        const checkoutButton = document.querySelector('.checkout-button');
-        const paymentMethods = document.querySelector('.payment-methods');
-        if (checkoutButton && paymentMethods) {
-            checkoutButton.style.display = 'block';
-            paymentMethods.style.display = 'none';
-        }
-    }
-}
 
-function hideCartModal() {
-    const cartModal = document.querySelector('.cart-modal');
-    if (cartModal) {
-        cartModal.classList.remove('active');
-    }
-}
 
-// Payment Functions
-function showPaymentOptions() {
-    const checkoutButton = document.querySelector('.checkout-button');
-    const paypalContainer = document.getElementById('paypal-button-container');
+// Handle payment success/cancel when returning from payment page
+document.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
     
-    if (checkoutButton && paypalContainer) {
-        checkoutButton.style.display = 'none';
-        paypalContainer.style.display = 'block';
+    if (paymentStatus === 'success') {
+        // Show success message
+        const successMessage = document.createElement('div');
+        successMessage.className = 'success-message';
+        successMessage.textContent = 'תודה על הרכישה! ההזמנה שלך התקבלה בהצלחה.';
+        document.body.appendChild(successMessage);
         
-        if (typeof initializePayments === 'function') {
-            initializePayments();
-        }
-    }
-}
-
-// Cart Icon Click Handler
-const cartIcon = document.querySelector('.cart-icon');
-const closeCart = document.querySelector('.close-cart');
-const cartModal = document.getElementById('cart-modal');
-
-cartIcon.addEventListener('click', () => {
-    cartModal.classList.add('active');
-});
-
-closeCart.addEventListener('click', () => {
-    cartModal.classList.remove('active');
-});
-
-// Close cart when clicking outside
-cartModal.addEventListener('click', (e) => {
-    if (e.target === cartModal) {
-        cartModal.classList.remove('active');
+        // Remove success message after 5 seconds
+        setTimeout(() => {
+            successMessage.remove();
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 5000);
+    } else if (paymentStatus === 'cancel') {
+        // Show cancellation message
+        const cancelMessage = document.createElement('div');
+        cancelMessage.className = 'error-message';
+        cancelMessage.textContent = 'התשלום בוטל. ניתן לנסות שוב מאוחר יותר.';
+        document.body.appendChild(cancelMessage);
+        
+        // Remove message after 5 seconds
+        setTimeout(() => {
+            cancelMessage.remove();
+            // Clean up URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }, 5000);
     }
 });
+
+
 
 // Quantity Selector
 document.querySelectorAll('.quantity-btn').forEach(button => {

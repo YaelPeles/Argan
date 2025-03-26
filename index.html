@@ -19,8 +19,246 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content="https://argans.co.il/images/logo.jpeg">
     <link rel="canonical" href="https://argans.co.il">
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Rubik:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .checkout-button { pointer-events: none; }
+        #payment-button-container {
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
+        }
+        .grow-pay-button {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: #00a651; /* Grow's green color */
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-family: 'Rubik', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .grow-pay-button:hover {
+            background-color: #008c44;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .buy-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            width: 100%;
+        }
+        
+        .buy-now-btn {
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-family: 'Rubik', sans-serif;
+            font-weight: 600;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            width: 100%;
+            background: linear-gradient(135deg, #00a651, #008c44);
+            color: white;
+            box-shadow: 0 4px 15px rgba(0, 166, 81, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .buy-now-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-icon {
+            font-size: 20px;
+        }
+        
+        .btn-text {
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .buy-250ml {
+            background-color: #00a651; /* Grow green */
+            color: white;
+        }
+        
+        .buy-100ml {
+            background-color: #f8f9fa;
+            color: #333;
+            border: 2px solid #00a651;
+        }
+        
+        .buy-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 166, 81, 0.4);
+        }
+        
+        .buy-now-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .buy-now-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0, 166, 81, 0.3);
+        }
+        
+        .buy-250ml:hover {
+            background-color: #008c44;
+        }
+        
+        .buy-100ml:hover {
+            background-color: #e9ecef;
+        }
+        .info-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 15px 25px;
+            border-radius: 5px;
+            z-index: 1000;
+            text-align: center;
+            font-family: 'Rubik', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            border-right: 4px solid #00a651;
+            max-width: 80%;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+        
+        .payment-confirm-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            direction: rtl;
+        }
+        
+        .payment-confirm-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 25px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-align: right;
+            font-family: 'Rubik', sans-serif;
+        }
+        
+        .payment-confirm-content h3 {
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #00a651;
+            padding-bottom: 10px;
+        }
+        
+        .cart-summary {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .confirm-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .confirm-proceed {
+            background-color: #00a651;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: 'Rubik', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .confirm-cancel {
+            background-color: #f1f1f1;
+            color: #333;
+            border: 1px solid #ddd;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-family: 'Rubik', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .confirm-proceed:hover {
+            background-color: #008c44;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .confirm-cancel:hover {
+            background-color: #e5e5e5;
+        }
+        .success-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            z-index: 1000;
+            text-align: center;
+            font-family: 'Rubik', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.01em;
+        }
     </style>
     
     <script type="application/ld+json">
@@ -109,51 +347,12 @@
                     <li><a href="#argan-info" data-i18n="argan_info">על שמן ארגן</a></li>
                     <li><a href="#about" data-i18n="about">אודות</a></li>
                     <li><a href="#contact" data-i18n="contact">צור קשר</a></li>
-                    <li>
-                        <div class="cart-icon">
-                            <span class="material-icons">shopping_cart</span>
-                            <span class="cart-count">0</span>
-                        </div>
-                    </li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Cart Modal -->
-    <div id="cart-modal" class="cart-modal">
-        <div class="cart-content">
-            <div class="cart-header">
-                <h3 data-i18n="cart_title">העגלה שלך</h3>
-                <button class="close-cart">&times;</button>
-            </div>
-            <div class="cart-items">
-                <!-- Cart items will be dynamically added here -->
-            </div>
-            <div class="cart-footer">
-                <div class="cart-total">
-                    <span data-i18n="total">סה"כ:</span>
-                    <span class="total-amount">₪0</span>
-                </div>
-                <div class="checkout-container">
-                    <button class="checkout-button no-click" data-i18n="checkout">לתשלום</button>
-                    <div class="payment-form" style="display: none;">
-                        <h3 class="payment-title" data-i18n="payment_details">פרטי תשלום</h3>
-                        <div class="order-summary">
-                            <h4 data-i18n="order_summary">סיכום הזמנה</h4>
-                            <div class="order-items"></div>
-                            <div class="order-total">
-                                <span data-i18n="total">סה"כ:</span>
-                                <span class="total-amount">₪0</span>
-                            </div>
-                        </div>
-                        <!-- PayPal Button Container -->
-                        <div id="paypal-button-container" class="paypal-button-container"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     <section id="home" class="hero-section">
         <div class="hero-video">
@@ -259,30 +458,14 @@
                             <span data-i18n="product_details.origin">מקור: מרוקו - אזור האטלס</span>
                         </div>
 
-                        <div class="size-selector">
-                            <h4 data-i18n="size_selector_title">בחר גודל:</h4>
-                            <div class="size-options">
-                                <button class="size-btn" data-size="100" data-price="99">
-                                    <span data-i18n="size_label_100">100 מ"ל</span>
-                                    <span class="price">₪99</span>
-                                </button>
-                                <button class="size-btn active" data-size="250" data-price="219">
-                                    <span data-i18n="size_label_250">250 מ"ל</span>
-                                    <span class="price">₪219</span>
-                                </button>
-                            </div>
-                        </div>
 
-                        <div class="product-price">
-                            <span class="price">₪219</span>
-                            <div class="quantity-selector">
-                                <button class="quantity-btn minus">-</button>
-                                <input type="number" value="1" min="1" class="quantity-input">
-                                <button class="quantity-btn plus">+</button>
-                            </div>
-                        </div>
 
-                        <button class="add-to-cart-btn" data-i18n="add_to_cart">הוסף לעגלה</button>
+                        <div class="buy-buttons">
+                            <button class="buy-now-btn">
+                                <span class="btn-icon">🛒</span>
+                                <span class="btn-text">קנה עכשיו</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -363,25 +546,6 @@
     <!-- Load dependencies first -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script src="translations.js"></script>
-    
-    <!-- Load PayPal SDK before payment.js -->
-    <script>
-        const paypalClientId = 'AdNnm8L-kyOWzawRyF55lg0ZCwJJzMR715IZ7ymcocNqQsIXZB2SzXzEorkeN0yA2JiEyftA5_IT0R3u';
-        const paypalScript = document.createElement('script');
-        paypalScript.src = `https://www.paypal.com/sdk/js?client-id=${paypalClientId}&currency=ILS&locale=he_IL`;
-        paypalScript.async = true;
-        paypalScript.defer = true;
-        paypalScript.onload = function() {
-            console.log('PayPal SDK loaded successfully');
-            if (typeof initializePayments === 'function') {
-                initializePayments();
-            }
-        };
-        paypalScript.onerror = function(error) {
-            console.error('Failed to load PayPal SDK:', error);
-        };
-        document.body.appendChild(paypalScript);
-    </script>
     
     <!-- Initialize email service -->
     <script>
