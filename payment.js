@@ -1,208 +1,34 @@
 // Product prices in ILS
 const PRODUCT_PRICES = {
-    '100': 99,
-    '250': 219,
-    '100 מ"ל': 99,
-    '250 מ"ל': 219
+    '1': 219, // 250ml bottle
+    '2': 99,  // 100ml bottle
 };
 
-// Initialize payment options in the cart modal
-function initializePayments() {
-    try {
-        // Get cart items and validate
-        console.log('1. Getting cart items...');
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        console.log('Cart contents:', cart);
-        
-        if (!cart || !Array.isArray(cart) || cart.length === 0) {
-            console.log('Error: Cart is empty or invalid');
-            return;
-        }
-        console.log('Cart validation passed');
-
-        const cartTotal = calculateCartTotal();
-        
-        if (!cartTotal || cartTotal <= 0) {
-            return;
-        }
-
-        console.log('3. Setting up payment UI...');
-        const paymentForm = document.querySelector('.payment-form');
-        const checkoutButton = document.querySelector('.checkout-button');
-        const paypalContainer = document.getElementById('paypal-button-container');
-        const cartItems = document.querySelector('.cart-items');
-        
-        console.log('UI Elements found:', {
-            paymentForm: !!paymentForm,
-            checkoutButton: !!checkoutButton,
-            paypalContainer: !!paypalContainer,
-            cartItems: !!cartItems
-        });
-        
-        if (!paypalContainer) {
-            console.log('Error: PayPal container not found');
-            return;
-        }
-
-        // Hide cart edit buttons but show order summary
-        if (cartItems) {
-            const editButtons = cartItems.querySelectorAll('.quantity-controls, .remove-item');
-            editButtons.forEach(button => button.style.display = 'none');
-        }
-
-        // Update order summary with items and total
-        updateOrderSummary(cart, cartTotal);
-
-        if (paymentForm && checkoutButton) {
-            checkoutButton.style.display = 'none';
-            paymentForm.style.display = 'block';
-            paypalContainer.style.display = 'block';
-        }
-
-        // Clear any existing buttons
-        paypalContainer.innerHTML = '';
-
-        console.log('4. Initializing PayPal buttons...');
-        if (typeof paypal === 'undefined') {
-            console.log('Error: PayPal SDK not loaded');
-            return;
-        }
-        console.log('PayPal SDK found, creating buttons...');
-        
-        console.log('4. Initializing PayPal buttons...');
-        const paypalButtonConfig = {
-            // PayPal button configuration
-            fundingSource: paypal.FUNDING.PAYPAL,
-            style: {
-                layout: 'vertical',
-                color: 'gold',
-                shape: 'rect',
-                height: 45
-            },
-            createOrder: function(data, actions) {
-                console.log('5. Creating PayPal order...');
-                const currentTotal = calculateCartTotal();
-                console.log('Current total:', currentTotal);
-                if (currentTotal <= 0) {
-                    console.log('Error: Invalid total amount');
-                    return null;
-                }
-
-                console.log('Creating order with amount:', currentTotal);
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            currency_code: 'ILS',
-                            value: currentTotal.toString()
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    const orderDetails = {
-                        orderNumber: generateOrderNumber(),
-                        orderDate: new Date().toISOString(),
-                        paymentMethod: details.payment_source?.card ? 'Credit Card' : 'PayPal',
-                        customerInfo: {
-                            name: details.payer.name.given_name + ' ' + details.payer.name.surname,
-                            email: details.payer.email_address
-                        },
-                        items: JSON.parse(localStorage.getItem('cart')) || [],
-                        total: calculateCartTotal()
-                    };
-                    showOrderConfirmation(orderDetails);
-                    localStorage.removeItem('cart');
-                });
-            }
-        };
-
-        // Create and store PayPal button instance
-        paypalButtonInstance = paypal.Buttons({
-            style: {
-                layout: 'vertical',
-                color: 'gold',
-                shape: 'rect',
-                height: 45
-            },
-            createOrder: function(data, actions) {
-                const currentTotal = calculateCartTotal();
-                console.log('Creating order with total:', currentTotal);
-                
-                return actions.order.create({
-                    purchase_units: [{
-                        amount: {
-                            currency_code: 'ILS',
-                            value: currentTotal.toString()
-                        }
-                    }]
-                });
-            },
-            onApprove: function(data, actions) {
-                return actions.order.capture().then(function(details) {
-                    console.log('Payment completed successfully:', details);
-                    const orderDetails = {
-                        orderNumber: generateOrderNumber(),
-                        orderDate: new Date().toISOString(),
-                        paymentMethod: details.payment_source?.card ? 'Credit Card' : 'PayPal',
-                        customerInfo: {
-                            name: details.payer.name.given_name + ' ' + details.payer.name.surname,
-                            email: details.payer.email_address
-                        },
-                        items: JSON.parse(localStorage.getItem('cart')) || [],
-                        total: calculateCartTotal()
-                    };
-                    showOrderConfirmation(orderDetails);
-                    localStorage.removeItem('cart');
-                });
-            },
-            onError: function(err) {
-                console.error('PayPal error:', err);
-            }
-        });
-
-        // Check if button can be rendered
-        if (!paypalButtonInstance.isEligible()) {
-            console.log('PayPal button is not eligible');
-            return;
-        }
-
-        // Render the button
-        console.log('Rendering PayPal button...');
-        paypalButtonInstance.render('#paypal-button-container').catch(function(error) {
-            console.error('Failed to render PayPal button:', error);
-        });
-
-    } catch (error) {
-        console.error('Error initializing payments:', error);
-        console.error('Error stack:', error.stack);
+// Direct purchase functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Check for payment status in URL (returning from payment)
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment');
+    
+    if (paymentStatus) {
+        // Payment status is handled in script.js
+        console.log('Payment status detected:', paymentStatus);
     }
-    console.log('=== Payment Initialization Complete ===');
+    
+    // Log Grow payment integration info
+    console.log('Grow payment integration ready');
+    console.log('250ml bottle (catalog #1): ₪219');
+    console.log('100ml bottle (catalog #2): ₪99');
+});
+
+// Helper function to get product name from catalog number
+function getProductName(catalogNumber) {
+    return catalogNumber === '1' ? 'שמן ארגן 250 מ"ל' : 'שמן ארגן 100 מ"ל';
 }
 
-// Calculate cart total
-function calculateCartTotal() {
-    try {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        return cart.reduce((total, item) => {
-            let price = PRODUCT_PRICES[item.size];
-            if (!price && item.size) {
-                // Try to match the size without the unit
-                const sizeNumber = item.size.match(/\d+/)?.[0];
-                if (sizeNumber) {
-                    price = PRODUCT_PRICES[sizeNumber];
-                }
-            }
-            if (!price) {
-                console.error('Invalid product size:', item.size);
-                return total;
-            }
-            return total + (price * (item.quantity || 1));
-        }, 0);
-    } catch (error) {
-        console.error('Error calculating cart total:', error);
-        return 0;
-    }
+// Helper function to get product price from catalog number
+function getProductPrice(catalogNumber) {
+    return PRODUCT_PRICES[catalogNumber] || 0;
 }
 
 // Placeholder for error handling if needed in the future

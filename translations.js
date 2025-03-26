@@ -47,9 +47,7 @@ window.translations = {
         argan_info: "על שמן ארגן",
         about: "אודות",
         contact: "צור קשר",
-        cart_title: "העגלה שלך",
-        total: "סה״כ:",
-        checkout: "לתשלום",
+
         hero_title: "שמן ארגן למאכל",
         hero_subtitle: "טעם טהור, בריאות טבעית",
         learn_more: "גלה עוד",
@@ -91,7 +89,7 @@ window.translations = {
         kosher_cert_link: "לצפייה בתעודת הכשרות",
         payment_success: "התשלום התקבל בהצלחה! תודה על הקנייה.",
         payment_error: "התשלום נכשל. אנא נסה שוב.",
-        cart_empty: "העגלה ריקה",
+
         product_badge: "100% טבעי",
         product_title: "שמן ארגן למאכל טהור",
         product_description: "שמן ארגן למאכל 100% טהור ואורגני בכשרות מהודרת. מיוצר בתהליך מסורתי תוך שמירה על איכות ללא פשרות.",
@@ -162,9 +160,7 @@ window.translations = {
         argan_info: "About Argan Oil",
         about: "About Us",
         contact: "Contact",
-        cart_title: "Your Cart",
-        total: "Total:",
-        checkout: "Checkout",
+
         hero_title: "Premium Edible Argan Oil",
         hero_subtitle: "Pure Taste, Natural Health",
         learn_more: "Learn More",
