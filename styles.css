@@ -487,6 +487,28 @@ nav a {
     z-index: 2;
 }
 
+@media (max-width: 768px) {
+    .product-badges {
+        top: 10px;
+        right: 10px;
+        gap: 5px;
+    }
+    
+    .product-badge[data-i18n="product_badge"] {
+        padding: 3px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .kosher-badge {
+        padding: 3px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .cert-link {
+        display: none;
+    }
+}
+
 .product-badge {
     background: var(--gold-gradient);
     color: white;
