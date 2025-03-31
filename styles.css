@@ -500,6 +500,8 @@ nav a {
 .product-image-container {
     position: relative;
     margin-bottom: 20px;
+    margin-top: 30px;
+    padding-top: 20px;
 }
 
 .product-image {
@@ -509,6 +511,7 @@ nav a {
     object-fit: contain;
     border-radius: 10px;
     transition: transform 0.3s ease;
+    margin-top: 15px;
 }
 
 .product-image:hover {
